@@ -5,7 +5,7 @@ CELERY_BROKER_URL_LOCAL = 'amqp://localhost/'
 CELERY_BROKER_URL = CELERY_BROKER_URL_LOCAL
 CM_REGISTER_Q = 'rpc_queue_CM_register' # Do no change this value
 
-CM_NAME = 'calculation_module_test'
+CM_NAME = 'Levelozed cost of heat'
 RPC_CM_ALIVE= 'rpc_queue_CM_ALIVE' # Do no change this value
 RPC_Q = 'rpc_queue_CM_compute' # Do no change this value
 CM_ID = 1 # CM_ID is defined by the enegy research center of Martigny (CREM)
@@ -14,44 +14,85 @@ PORT_DOCKER = 80
 PORT = PORT_LOCAL
 TRANFER_PROTOCOLE ='http://'
 INPUTS_CALCULATION_MODULE = [
-    {'input_name': 'Reduction factor',
+    {'input_name': 'Gross floor area',
      'input_type': 'input',
-     'input_parameter_name': 'reduction_factor',
-     'input_value': 1,
-     'input_priority': 0,
-     'input_unit': 'none',
-     'input_min': 1,
-     'input_max': 10, 'cm_id': CM_ID  # Do no change this value
+     'input_parameter_name': 'gfa',
+     'input_value': 100,
+     'input_unit': 'm2',
+     'input_min': 0,
+     'input_max': 10000,
+     'cm_id': CM_ID
      },
-    {'input_name': 'Blablabla',
-     'input_type': 'range',
-     'input_parameter_name': 'bla',
-     'input_value': 50,
-     'input_priority': 1,
+    {'input_name': 'Interest rate',
+     'input_type': 'input',
+     'input_parameter_name': 'r',
+     'input_value': 0.05,
      'input_unit': '',
-     'input_min': 10,
-     'input_max': 1000,
-     'cm_id': CM_ID  # Do no change this value
-     }
+     'input_min': 0,
+     'input_max': 1,
+     'cm_id': CM_ID
+     },
+     {
+      'input_name': 'Sector',
+      'input_type': 'radio',
+      'input_parameter_name': 'sector',
+      'input_value': ["service", "residential"],
+      'input_unit': '',
+      'input_min': '',
+      'input_max': '',
+      'cm_id': CM_ID
+      },
+     {
+      'input_name': 'Building type',
+      'input_type': 'select',
+      'input_parameter_name': "building_type",
+      'input_value': ["service",
+                      "new SFH",
+                      "new MFH"],
+      'input_unit': '',
+      'input_min': '',
+      'input_max': '',
+      'cm_id': CM_ID
+      },
+     {
+      'input_name': 'Demand type',
+      'input_type': 'select',
+      'input_parameter_name': 'demand_type',
+      'input_value': '["heating", "cooling"]',
+      'input_unit': '',
+      'input_min': '',
+      'input_max': '',
+      'cm_id': CM_ID
+      },
+     {
+      'input_name': 'Year',
+      'input_type': 'select',
+      'input_parameter_name': 'year',
+      'input_value': ["2015", "2020", "2030", "2050"],
+      'input_unit': '',
+      'input_min': '',
+      'input_max': '',
+      'cm_id': CM_ID
+      },
 ]
 
 
 SIGNATURE = {
     "category": "Buildings",
-    "authorized_scale":["NUTS 2","NUTS 0","Hectare"],
+    "authorized_scale":["NUTS 2", "NUTS 3","LAU 2","Hectare"],
     "cm_name": CM_NAME,
     "layers_needed": [
-        "heat_tot_curr_density",
-    ],
+            "heat_tot_curr_density"
+            ],
     "type_layer_needed": [
-        "heat",
-    ],
+            "heat"
+            ],
     "vectors_needed": [
         "heating_technologies_eu28",
 
     ],
     "cm_url": "Do not add something",
-    "cm_description": "this computation module allows to divide the HDM",
+    "cm_description": "this computation module calculates the levelized cost of heat/cold",
     "cm_id": CM_ID,
     'inputs_calculation_module': INPUTS_CALCULATION_MODULE
 }
