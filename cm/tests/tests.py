@@ -36,7 +36,7 @@ class TestAPI(unittest.TestCase):
         save_path = UPLOAD_DIRECTORY+"/raster_for_test.tif"
         copyfile(raster_file_path, save_path)
         df = pd.read_csv(csv_file_path)
-        inputs_csv_selection = {}
+        inputs_vector_selection = {}
         inputs_raster_selection = {}
         inputs_parameter_selection = {}
         inputs_raster_selection["heat_tot_curr_density"]  = save_path
@@ -54,7 +54,7 @@ class TestAPI(unittest.TestCase):
                     else:
                         temp.append(item)
             '''        
-            inputs_csv_selection[column] = list(df[column])
+            inputs_vector_selection[column] = list(df[column])
             
         df = None
         inputs_parameter_selection["sector"] = 'residential'
@@ -66,7 +66,7 @@ class TestAPI(unittest.TestCase):
         
         # register the calculation module a
         payload = {"inputs_raster_selection": inputs_raster_selection,
-                   "inputs_csv_selection": inputs_csv_selection,
+                   "inputs_vector_selection": inputs_vector_selection,
                    "inputs_parameter_selection": inputs_parameter_selection}
 
 
