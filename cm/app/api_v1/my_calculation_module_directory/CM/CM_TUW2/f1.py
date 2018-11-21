@@ -13,16 +13,16 @@ from CM.CM_TUW1.read_raster import raster_array
 def return_nuts_codes(in_raster):
     code_csv = path +'/CSVs/nuts_id_number.csv'
     code_list = pd.read_csv(code_csv)
-    arr = raster_array(in_raster)
-    unique_val, counts = np.unique(arr, return_counts=True)    
-    ind_0 = np.argwhere(unique_val == 0)
-    np.delete(unique_val, ind_0)
-    np.delete(counts, ind_0)
-    ind = np.argwhere(unique_val == np.max(counts))
+    arr = raster_array(in_raster).astype(int)
+    unique_val, counts = np.unique(arr, return_counts=True)
+    ind_0 = np.argwhere(unique_val == 0)[0][0]
+    unique_val = np.delete(unique_val, ind_0)
+    counts = np.delete(counts, ind_0)
+    ind = np.argwhere(counts == np.max(counts))[0][0]
     code = unique_val[ind]
     # Columns 3, 4, 5, 6 show nuts0, nuts1, nuts2, nuts3, respectively!
     # This csv will not change and is part of the uploaded scripts.
-    [nuts0_row, nuts1_row, nuts2_row, nuts3_row] = code_list[code_list['id'] ==code].values[:, [3, 4, 5, 6]][0]
+    [nuts0_row, nuts1_row, nuts2_row, nuts3_row] = code_list[code_list['id'] == code].values[:, [3, 4, 5, 6]][0]
     code_list_values = code_list.values
     nuts0 = code_list_values[nuts0_row, 1]
     nuts1 = code_list_values[nuts1_row, 1]
@@ -152,11 +152,3 @@ def main(sector, building_type, demand_type, year, gfa, r, in_df_tech_info,
         output = dict()
     # prj(building_status)
     return building_status
-
-
-
-
-
-
-
-

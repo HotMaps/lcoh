@@ -6,7 +6,7 @@ if path not in sys.path:
     sys.path.append(path)
 from osgeo import gdal
 
-from ..helper import generate_output_file_tif, create_zip_shapefiles
+from ..helper import generate_output_file_tif
 import my_calculation_module_directory.CM.CM_TUW2.run_cm as CM2
 import my_calculation_module_directory.CM.CM_TUW19.run_cm as CM19
 from my_calculation_module_directory.CM.CM_TUW1.read_raster import raster_array
@@ -14,8 +14,6 @@ from my_calculation_module_directory.CM.CM_TUW1.read_raster import raster_array
 
 verbose = True
 
-
-verbose = True
 
 def create_dataframe(input_dict):
     df = pd.DataFrame()
@@ -55,7 +53,7 @@ def calculation(output_directory, inputs_raster_selection,inputs_vector_selectio
     r = inputs_parameter_selection["r"]
     
     # input rows from CSV DB and create dataframe
-    in_df_tech_info = create_dataframe(inputs_vector_selection['Heating_technologies_EU28_v3'])
+    in_df_tech_info = create_dataframe(inputs_vector_selection['heating_technologies_eu28'])
     if verbose:
         csv_path = path +  '/my_calculation_module_directory/CSVs'
         in_df_energy_price = pd.read_csv(csv_path + '/energy_price.csv')
@@ -66,10 +64,11 @@ def calculation(output_directory, inputs_raster_selection,inputs_vector_selectio
     
     # input raster
     if verbose:
-        in_raster_nuts_id_number = inputs_raster_selection['heat_tot_curr_density']
+        in_raster_nuts_id_number = generate_output_file_tif(output_directory)
+        in_raster_hdm = inputs_raster_selection['heat_tot_curr_density']
         raster_path = path +  '/my_calculation_module_directory/Rasters/nuts_id_number.tif'
         from osgeo import gdal
-        arr, gt = raster_array(in_raster_nuts_id_number, return_gt=True)
+        arr, gt = raster_array(in_raster_hdm, return_gt=True)
         ds1 = gdal.Open(raster_path)
         gt1 = ds1.GetGeoTransform()
         x_off = (gt[0] - gt1[0])/100
@@ -78,7 +77,8 @@ def calculation(output_directory, inputs_raster_selection,inputs_vector_selectio
         arr_new = ds1.ReadAsArray(x_off,y_off, y_dim, x_dim)
         ds1 = None
         # set all pixels out of the selection zone to zero
-        arr_new = arr_new * arr
+        arr_new = arr_new * arr.astype(bool).astype(int)
+
         CM19.main(in_raster_nuts_id_number, gt, 'int16', arr_new)
     else:
         in_raster_nuts_id_number = inputs_raster_selection['nuts_id_number']

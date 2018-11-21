@@ -29,8 +29,8 @@ class TestAPI(unittest.TestCase):
 
 
     def test_compute(self):
-        raster_file_path = 'tests/data/raster_for_test.tif'
-        csv_file_path = 'tests/data/technologies.csv'
+        raster_file_path = "tests/data/raster_for_test.tif"
+        csv_file_path = "tests/data/technologies.csv"
         
         # simulate copy from HTAPI to CM
         save_path = UPLOAD_DIRECTORY+"/raster_for_test.tif"
@@ -40,26 +40,14 @@ class TestAPI(unittest.TestCase):
         inputs_raster_selection = {}
         inputs_parameter_selection = {}
         inputs_raster_selection["heat_tot_curr_density"]  = save_path
-
-        for column in df.columns:
-            '''
-            temp = []
-            obj = df[column].values
-            for item in obj:
-                if type(item) == str:
-                    temp.append(item)
-                else:
-                    if np.isnan(item):
-                        temp.append(0)
-                    else:
-                        temp.append(item)
-            '''        
-            inputs_vector_selection[column] = list(df[column])
-            
+        temp = {}
+        for column in df.columns:      
+            temp[column] = list(df[column])            
         df = None
-        inputs_parameter_selection["sector"] = 'residential'
-        inputs_parameter_selection["building_type"] = 'new SFH'
-        inputs_parameter_selection["demand_type"] = 'heating'
+        inputs_vector_selection['heating_technologies_eu28'] = temp
+        inputs_parameter_selection["sector"] = "residential"
+        inputs_parameter_selection["building_type"] = "new SFH"
+        inputs_parameter_selection["demand_type"] = "heating"
         inputs_parameter_selection["year"] = 2015
         inputs_parameter_selection["gfa"] = 100
         inputs_parameter_selection["r"] = 0.05
