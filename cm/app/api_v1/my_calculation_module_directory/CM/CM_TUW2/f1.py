@@ -6,7 +6,7 @@ path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)
 if path not in sys.path:
     sys.path.append(path)
 from CM.CM_TUW2.LCOH import levelized_costs_of_heat as lcoh
-# from CM.CM_TUW2.f2_projection import projection as prj
+from CM.CM_TUW2.f2_projection import projection_new as prj
 from CM.CM_TUW1.read_raster import raster_array
 
 
@@ -150,5 +150,6 @@ def main(sector, building_type, demand_type, year, gfa, r, in_df_tech_info,
         building_status[key] = output
         output = None
         output = dict()
-    # prj(building_status)
-    return building_status
+    
+    graphics = prj(building_status)
+    return graphics

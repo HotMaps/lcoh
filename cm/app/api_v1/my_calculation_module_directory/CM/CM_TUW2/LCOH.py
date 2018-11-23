@@ -34,10 +34,10 @@ def levelized_costs_of_heat(energy_demand, heat_load, energy_price,
     # costs per capita [€/capita]
     lcohcapita = total_costs / population
     '''
-    output = {'Final energy demand': fed,
-              'Capital Expenditure (CAPEX)': CAPEX,
-              'Operational Expenditure (OPEX)': OPEX,
-              'Energy costs': energy_costs,
-              'Total costs': total_costs,
-              'Levelized costs of heat': lcoh}
+    output = {'Final energy demand': round(float(fed), 2),
+              'Capital Expenditure (CAPEX)': round(float(CAPEX), 2),
+              'Operational Expenditure (OPEX)': round(float(OPEX), 2),
+              'Energy costs': round(float(energy_costs), 2),
+              'Total costs': round(float(total_costs), 2),
+              'Levelized costs of heat': round(float(lcoh), 2)}
     return output

@@ -16,9 +16,9 @@ verbose = True
 
 
 def create_dataframe(input_dict):
-    df = pd.DataFrame()
-    for key in input_dict.keys():
-        df[key] = input_dict[key]
+    temp = str(input_dict)
+    temp = temp.replace("\'","\"")
+    df = pd.read_json(temp, orient='records')
     return df
 
 
@@ -83,34 +83,12 @@ def calculation(output_directory, inputs_raster_selection,inputs_vector_selectio
     else:
         in_raster_nuts_id_number = inputs_raster_selection['nuts_id_number']
 
-    output_summary = CM2.main(sector, building_type, demand_type, year, gfa, r,
+    graphics = CM2.main(sector, building_type, demand_type, year, gfa, r,
                               in_df_tech_info, in_df_energy_price,
                               in_df_specific_demand, in_raster_nuts_id_number)
-
-
-
-
-
-    '''
     result = dict()
-    result['name'] = 'CM District Heating Grid Investment'
-    result["raster_layers"]=[{"name": "district heating coherent areas","path": out_raster_maxDHdem},
-          {"name": "district heating coherent areas","path": out_raster_invest_Euro},
-          {"name": "district heating coherent areas","path": out_raster_hdm_last_year},
-          {"name": "district heating coherent areas","path": out_raster_dist_pipe_length},
-          {"name": "district heating coherent areas","path": out_raster_coh_area_bool},
-          {"name": "district heating coherent areas","path": out_raster_labels}]
-    
-    result["vector_layers"]=[{"name": "shapefile of coherent areas with their potential","path": out_shp_prelabel},
-          {"name": "shapefile of coherent areas with their potential","path": out_shp_label},
-          {"name": "shapefile of coherent areas with their potential","path": out_shp_edges},
-          {"name": "shapefile of coherent areas with their potential","path": out_shp_nodes}]
-
-    result["tabular"]=[{"name": "name of csv file","path": out_csv_solution}]
-    result['indicator'] = output_summary
-
+    result['graphics'] = graphics
     return result
-    '''
     
 
 def colorizeMyOutputRaster(out_ds):
