@@ -53,7 +53,12 @@ def calculation(output_directory, inputs_raster_selection,inputs_vector_selectio
     r = inputs_parameter_selection["r"]
     
     # input rows from CSV DB and create dataframe
-    in_df_tech_info = create_dataframe(inputs_vector_selection['heating_technologies_eu28'])
+
+    inputs_vector_selection = inputs_vector_selection["heating_technologies_eu28"]
+    print('inputs_vector_selection****************************************************', inputs_vector_selection)
+    in_df_tech_info = create_dataframe(inputs_vector_selection)
+
+    print('in_df_tech_info', in_df_tech_info)
     if verbose:
         csv_path = path +  '/my_calculation_module_directory/CSVs'
         in_df_energy_price = pd.read_csv(csv_path + '/energy_price.csv')
