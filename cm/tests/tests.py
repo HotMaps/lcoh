@@ -36,22 +36,19 @@ class TestAPI(unittest.TestCase):
         save_path = UPLOAD_DIRECTORY+"/raster_for_test.tif"
         copyfile(raster_file_path, save_path)
         df = pd.read_csv(csv_file_path)
+        
         inputs_vector_selection = {}
         inputs_raster_selection = {}
         inputs_parameter_selection = {}
         inputs_raster_selection["heat_tot_curr_density"]  = save_path
-        temp = {}
-        for column in df.columns:      
-            temp[column] = list(df[column])            
-        df = None
-        inputs_vector_selection['heating_technologies_eu28'] = temp
+        inputs_vector_selection['heating_technologies_eu28'] = df.to_json(orient='records')
         inputs_parameter_selection["sector"] = "residential"
         inputs_parameter_selection["building_type"] = "new SFH"
         inputs_parameter_selection["demand_type"] = "heating"
         inputs_parameter_selection["year"] = 2015
         inputs_parameter_selection["gfa"] = 100
         inputs_parameter_selection["r"] = 0.05
-        
+        df = None
         # register the calculation module a
         payload = {"inputs_raster_selection": inputs_raster_selection,
                    "inputs_vector_selection": inputs_vector_selection,
