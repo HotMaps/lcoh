@@ -40,8 +40,9 @@ class TestAPI(unittest.TestCase):
         inputs_vector_selection = {}
         inputs_raster_selection = {}
         inputs_parameter_selection = {}
-        inputs_raster_selection["heat_tot_curr_density"]  = save_path
+        inputs_raster_selection["heat_tot_curr_density_tif"]  = save_path
         inputs_vector_selection['heating_technologies_eu28'] = df.to_json(orient='records')
+        print ('json',inputs_vector_selection['heating_technologies_eu28'])
         inputs_parameter_selection["sector"] = "residential"
         inputs_parameter_selection["building_type"] = "new SFH"
         inputs_parameter_selection["demand_type"] = "heating"

@@ -33,15 +33,18 @@ def return_nuts_codes(in_raster):
 
 def return_columns(df):
     column_names = df.columns
+    print('v',column_names)
     indices = []
     indices.append(np.argwhere(column_names == 'heating_equipment')[0][0])
-    indices.append(np.argwhere(column_names == 'variable_O_and_M')[0][0])
+
+    indices.append(np.argwhere(column_names == 'variable_o_and_m')[0][0])
+    print('************STEP*********')
     indices.append(np.argwhere(column_names == 'technical_lifetime')[0][0])
     indices.append(np.argwhere(column_names == 'total_annual_net_efficiency')[0][0])
     indices.append(np.argwhere(column_names == 'k1_specific_investment_costs')[0][0])
     indices.append(np.argwhere(column_names == 'k2_specific_investment_costs')[0][0])
-    indices.append(np.argwhere(column_names == 'k1_fixed_O_and_M')[0][0])
-    indices.append(np.argwhere(column_names == 'k2_fixed_O_and_M')[0][0])
+    indices.append(np.argwhere(column_names == 'k1_fixed_o_and_m')[0][0])
+    indices.append(np.argwhere(column_names == 'k2_fixed_o_and_m')[0][0])
     return indices
 
 
@@ -95,7 +98,10 @@ def main(sector, building_type, demand_type, year, gfa, r, in_df_tech_info,
                                      'renovated building': 0.5,
                                      'new building': 0.3
                                      }
+
     nuts0, nuts1, nuts2, nuts3 = return_nuts_codes(in_raster_nuts_id_number)
+
+
     '''
     extract data from tech info sheet for the give country and year and
     considering following columns:
@@ -108,10 +114,13 @@ def main(sector, building_type, demand_type, year, gfa, r, in_df_tech_info,
     19: k1_fixed_O_and_M
     20: k2_fixed_O_and_M
     '''
+
     required_columns = return_columns(in_df_tech_info)
+    print('************STEPsss*********')
     info_val = in_df_tech_info[(in_df_tech_info['year'] == year) &
                             (in_df_tech_info['type_of_building'] == building_type)
                             ].values[:, required_columns]
+
     in_df_tech_info = None
     # get factor for sizing the heating/cooling system
     factor = load_factor(nuts2, sector)
