@@ -2,7 +2,7 @@
 CELERY_BROKER_URL_DOCKER = 'amqp://admin:mypass@rabbit:5672/'
 CELERY_BROKER_URL_LOCAL = 'amqp://localhost/'
 
-CELERY_BROKER_URL = CELERY_BROKER_URL_LOCAL
+CELERY_BROKER_URL = CELERY_BROKER_URL_DOCKER
 CM_REGISTER_Q = 'rpc_queue_CM_register' # Do no change this value
 
 CM_NAME = 'Levelozed cost of heat'
