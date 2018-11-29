@@ -36,6 +36,7 @@ RUN apt-get update \
     python-gdal \
     make \
     python-pip \
+    python-gdal \
     ssh \
     && apt-get autoremove \
     && apt-get clean
@@ -62,12 +63,11 @@ RUN apt-get update \
     software-properties-common \
     wget
 
-RUN wget https://bootstrap.pypa.io/get-pip.py
-RUN python get-pip.py
 
 
-RUN pip install -r requirements.txt
-RUN pip install gunicorn
+
+RUN pip3 install -r requirements.txt
+RUN pip3 install gunicorn
 
 
 
