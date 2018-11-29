@@ -35,7 +35,6 @@ RUN apt-get update \
     libgdal-dev \
     python-gdal \
     make \
-    python-pip \
     python3-pip  \
     python-gdal \
     ssh \
