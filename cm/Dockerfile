@@ -36,6 +36,7 @@ RUN apt-get update \
     python-gdal \
     make \
     python-pip \
+    python3-pip  \
     python-gdal \
     ssh \
     && apt-get autoremove \
