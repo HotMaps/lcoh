@@ -16,7 +16,7 @@ verbose = True
 
 
 def create_dataframe(input_dict):
-    temp = str(input_dict)
+    temp = '%s' %input_dict
     temp = temp.replace("\'","\"")
     df = pd.read_json(temp, orient='records')
     return df
@@ -63,6 +63,7 @@ def calculation(output_directory, inputs_raster_selection,inputs_vector_selectio
         in_df_specific_demand = create_dataframe(inputs_vector_selection['space_heating_cooling_dhw_top-down'])
     
     # input raster
+    '''
     if verbose:
         in_raster_nuts_id_number = generate_output_file_tif(output_directory)
         in_raster_hdm = inputs_raster_selection['heat_tot_curr_density']
@@ -81,7 +82,8 @@ def calculation(output_directory, inputs_raster_selection,inputs_vector_selectio
 
         CM19.main(in_raster_nuts_id_number, gt, 'int16', arr_new)
     else:
-        in_raster_nuts_id_number = inputs_raster_selection['nuts_id_number']
+    '''
+    in_raster_nuts_id_number = inputs_raster_selection['nuts_id_number']
 
     graphics = CM2.main(sector, building_type, demand_type, year, gfa, r,
                               in_df_tech_info, in_df_energy_price,

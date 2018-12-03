@@ -30,18 +30,20 @@ class TestAPI(unittest.TestCase):
 
     def test_compute(self):
         raster_file_path = "tests/data/raster_for_test.tif"
-        csv_file_path = "tests/data/technologies.csv"
+        json_file_test = "tests/data/heat_tec_EU28_fixed2.text.txt"
         
         # simulate copy from HTAPI to CM
         save_path = UPLOAD_DIRECTORY+"/raster_for_test.tif"
         copyfile(raster_file_path, save_path)
-        df = pd.read_csv(csv_file_path)
-        
         inputs_vector_selection = {}
         inputs_raster_selection = {}
         inputs_parameter_selection = {}
-        inputs_raster_selection["heat_tot_curr_density"]  = save_path
-        inputs_vector_selection['heating_technologies_eu28'] = df.to_json(orient='records')
+        inputs_raster_selection["nuts_id_number"]  = save_path
+        import json
+        with open(json_file_test) as json_data:
+            d=json.load(json_data)
+        json_data.close()
+        inputs_vector_selection['heating_technologies_eu28'] = d
         inputs_parameter_selection["sector"] = "residential"
         inputs_parameter_selection["building_type"] = "new SFH"
         inputs_parameter_selection["demand_type"] = "heating"

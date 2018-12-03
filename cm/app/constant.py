@@ -19,7 +19,7 @@ INPUTS_CALCULATION_MODULE = [
      'input_parameter_name': 'gfa',
      'input_value': 100,
      'input_unit': 'm2',
-     'input_min': 0,
+     'input_min': 1,
      'input_max': 10000,
      'cm_id': CM_ID
      },

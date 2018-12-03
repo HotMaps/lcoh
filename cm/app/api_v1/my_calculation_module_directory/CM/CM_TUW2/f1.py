@@ -17,6 +17,8 @@ def return_nuts_codes(in_raster):
     unique_val, counts = np.unique(arr, return_counts=True)
     ind_0 = np.argwhere(unique_val == 0)[0][0]
     unique_val = np.delete(unique_val, ind_0)
+    # In case of region selection from several NUTS 3 areas, only the one with
+    # highest number of elements is selected.
     counts = np.delete(counts, ind_0)
     ind = np.argwhere(counts == np.max(counts))[0][0]
     code = unique_val[ind]
@@ -35,13 +37,13 @@ def return_columns(df):
     column_names = df.columns
     indices = []
     indices.append(np.argwhere(column_names == 'heating_equipment')[0][0])
-    indices.append(np.argwhere(column_names == 'variable_O_and_M')[0][0])
+    indices.append(np.argwhere(column_names == 'variable_o_and_m')[0][0])
     indices.append(np.argwhere(column_names == 'technical_lifetime')[0][0])
     indices.append(np.argwhere(column_names == 'total_annual_net_efficiency')[0][0])
     indices.append(np.argwhere(column_names == 'k1_specific_investment_costs')[0][0])
     indices.append(np.argwhere(column_names == 'k2_specific_investment_costs')[0][0])
-    indices.append(np.argwhere(column_names == 'k1_fixed_O_and_M')[0][0])
-    indices.append(np.argwhere(column_names == 'k2_fixed_O_and_M')[0][0])
+    indices.append(np.argwhere(column_names == 'k1_fixed_o_and_m')[0][0])
+    indices.append(np.argwhere(column_names == 'k2_fixed_o_and_m')[0][0])
     return indices
 
 
@@ -52,7 +54,7 @@ def load_factor(nuts2_code, sector, hoc='heating'):
                 (df['heating_or_cooling'] == hoc) &
                 (df['sector'] == sector)].values[:, 3]
     df = None
-    return factor
+    return factor[0]
 
 
 def fuel_prices(df, nuts0_code, year, fuel_type_column=3,
@@ -86,6 +88,7 @@ def main(sector, building_type, demand_type, year, gfa, r, in_df_tech_info,
                  'HP Brine-to-Water': 'electricity',
                  'Electric heater': 'electricity',
                  'Bio-oil boiler': 'oil',
+                 'Oil boiler': 'oil',
                  'Biomass_Automatic': 'biomass',
                  'Biomass_Manual': 'biomass',
                  'Wood stove': 'wood',
@@ -112,6 +115,8 @@ def main(sector, building_type, demand_type, year, gfa, r, in_df_tech_info,
     info_val = in_df_tech_info[(in_df_tech_info['year'] == year) &
                             (in_df_tech_info['type_of_building'] == building_type)
                             ].values[:, required_columns]
+    info_val[info_val == 'None'] = '0.0001'
+    info_val[:, 1:] = info_val[:, 1:].astype(float)
     in_df_tech_info = None
     # get factor for sizing the heating/cooling system
     factor = load_factor(nuts2, sector)
@@ -122,6 +127,19 @@ def main(sector, building_type, demand_type, year, gfa, r, in_df_tech_info,
             (in_df_specific_demand['nuts0_code'] == nuts0) &
             (in_df_specific_demand['sector'] == sector)
             ].values[:, [2, 3, 4]][0]
+    # default values for missing data in csv data set; flag for use of default
+    # values.
+    default_dict = {
+            'var_o_and_m': 0.025,
+            'lifetime': 20,
+            'efficiency': 0.9,
+            'k1_specific_investment_cost': 1600,
+            'k2_specific_investment_cost': -0.52,
+            'k1_fix_o_and_m': 53,
+            'k2_fix_o_and_m': -0.56
+            }
+    var_o_and_m, lifetime, efficiency, k1_specific_investment_cost, \
+    k2_specific_investment_cost, k1_fix_o_and_m, k2_fix_o_and_m = np.zeros(7)
     # b_type: building type ; b_lcoh: building levelized cost of heat
     output = dict()
     building_status = dict()
@@ -133,6 +151,14 @@ def main(sector, building_type, demand_type, year, gfa, r, in_df_tech_info,
             # DH is not considered as decentral heating system.
             if technology == 'DH substation':
                 continue
+            if 'None' in info_val[i, :]:
+                print('Data base has some missing numbers. Please contact the \
+                      the data provider. The outputs are not correct.')
+                print('The following parameters are used instead of missing \
+                      data: \n\t', default_dict)
+                var_o_and_m, lifetime, efficiency, \
+                k1_specific_investment_cost, k2_specific_investment_cost, \
+                k1_fix_o_and_m, k2_fix_o_and_m = default_dict.values()                
             energy_price = energy_prices[fuel_type[technology]]
             if demand_type == 'heating':
                 heating_energy_demand = gfa * (building_status_energy_factor[key] * sp_heat + sp_dhw)
@@ -143,7 +169,14 @@ def main(sector, building_type, demand_type, year, gfa, r, in_df_tech_info,
                 # cold load in kW
                 cooling_load = cooling_energy_demand * factor
             specific_investment_cost = k1_specific_investment_cost * heat_load**k2_specific_investment_cost
-            fix_o_and_m = k1_fix_o_and_m * heat_load**k2_specific_investment_cost
+            try:
+                fix_o_and_m = k1_fix_o_and_m * (heat_load**(k2_specific_investment_cost))
+            except:
+                print('k1_fix_o_and_m: ', type(k1_fix_o_and_m))
+                print('heat_load: ', type(heat_load))
+                print('k2_specific_investment_cost: ', type(k2_specific_investment_cost))
+                print('factor: ', type(factor))
+                raise
             output[technology] = lcoh(heating_energy_demand, heat_load,
                   energy_price, specific_investment_cost, fix_o_and_m,
                   var_o_and_m, efficiency, r, lifetime)
