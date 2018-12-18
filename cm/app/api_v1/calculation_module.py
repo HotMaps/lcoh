@@ -87,7 +87,7 @@ def calculation(output_directory, inputs_raster_selection,inputs_vector_selectio
     else:
     '''
     in_raster_nuts_id_number = inputs_raster_selection['heat_tot_curr_density']
-    print("***************************** zzzzzzzzzzzz*********************************************************")
+    print("*****************************")
 
     graphics = CM2.main(sector, building_type, demand_type, year, gfa, r,
                               in_df_tech_info, in_df_energy_price,

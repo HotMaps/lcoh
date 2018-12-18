@@ -113,16 +113,16 @@ def main(sector, building_type, demand_type, year, gfa, r, in_df_tech_info,
     19: k1_fixed_O_and_M
     20: k2_fixed_O_and_M
     '''
-
+    #TODO non services is not working
     required_columns = return_columns(in_df_tech_info)
 
-
+    print ('in_df_tech_info ', in_df_tech_info)
     info_val = in_df_tech_info[(in_df_tech_info['year'] == int(year)) &
                             (in_df_tech_info['type_of_building'].str.replace(" ", "") == building_type.replace(" ", ""))
                             ].values[:, required_columns]
 
 
-
+    print ('info_val ', info_val)
 
     info_val[info_val == 'None'] = '0.0001'
     info_val[:, 1:] = info_val[:, 1:].astype(float)
@@ -155,12 +155,18 @@ def main(sector, building_type, demand_type, year, gfa, r, in_df_tech_info,
     var_o_and_m, lifetime, efficiency, k1_specific_investment_cost, \
     k2_specific_investment_cost, k1_fix_o_and_m, k2_fix_o_and_m = np.zeros(7)
     # b_type: building type ; b_lcoh: building levelized cost of heat
-
+    print("**************************************xx********************************")
 
     output = dict()
     building_status = dict()
     for key in building_status_energy_factor.keys():
+        print("**************************************xxx********************************")
+        print ("**************************************xxx********************************")
+        print("range",range(info_val.shape[0]))
+        print("type range",type(range(info_val.shape[0])))
         for i in range(info_val.shape[0]):
+
+
             technology, var_o_and_m, lifetime, efficiency, \
             k1_specific_investment_cost, k2_specific_investment_cost, \
             k1_fix_o_and_m, k2_fix_o_and_m = info_val[i, :]
@@ -178,7 +184,7 @@ def main(sector, building_type, demand_type, year, gfa, r, in_df_tech_info,
 
 
             energy_price = energy_prices[fuel_type[technology]]
-
+            print("**************************************OOOOOOO heating********************************")
 
             if demand_type == 'heating':
                 print("**************************************heating********************************")
@@ -194,13 +200,13 @@ def main(sector, building_type, demand_type, year, gfa, r, in_df_tech_info,
                 heat_load = heating_energy_demand * factor
             else:
                 print("**************************************non heating********************************")
-                cooling_energy_demand = gfa * sp_cold
+                cooling_energy_demand = float(gfa) * float(sp_cold)
                 # cold load in kW
-                cooling_load = cooling_energy_demand * factor
-            specific_investment_cost = k1_specific_investment_cost * heat_load**k2_specific_investment_cost
-            print("**************************************specific_investment_cost********************************")
+                cooling_load = float(cooling_energy_demand) * float(factor)
+            specific_investment_cost = float(k1_specific_investment_cost) * float(heat_load)**float(k2_specific_investment_cost)
+            #TODO non heating is not working
             try:
-                fix_o_and_m = k1_fix_o_and_m * (heat_load**(k2_specific_investment_cost))
+                fix_o_and_m = float(k1_fix_o_and_m) * (float(heat_load)**(float(k2_specific_investment_cost)))
             except:
                 print('k1_fix_o_and_m: ', type(k1_fix_o_and_m))
                 print('heat_load: ', type(heat_load))
