@@ -44,20 +44,23 @@ def calculation(output_directory, inputs_raster_selection,inputs_vector_selectio
         out_raster_
 
     '''
-    # input parameters
+
+    print("***************************** input parameters***********************************************************")
     sector = inputs_parameter_selection["sector"]
     building_type = inputs_parameter_selection["building_type"]
     demand_type = inputs_parameter_selection["demand_type"]
     year = inputs_parameter_selection["year"]
     gfa = inputs_parameter_selection["gfa"]
     r = inputs_parameter_selection["r"]
-    
-    # input rows from CSV DB and create dataframe
+
+
+    print("***************************** # input rows from CSV DB and create dataframe**********************************************************")
     in_df_tech_info = create_dataframe(inputs_vector_selection['heating_technologies_eu28'])
     if verbose:
         csv_path = path +  '/my_calculation_module_directory/CSVs'
         in_df_energy_price = pd.read_csv(csv_path + '/energy_price.csv')
         in_df_specific_demand = pd.read_csv(csv_path + '/AD.EURAC.Ave_useful_h&c_demand.csv')
+
     else:
         in_df_energy_price = create_dataframe(inputs_vector_selection['input_energy_price'])
         in_df_specific_demand = create_dataframe(inputs_vector_selection['space_heating_cooling_dhw_top-down'])
@@ -83,7 +86,8 @@ def calculation(output_directory, inputs_raster_selection,inputs_vector_selectio
         CM19.main(in_raster_nuts_id_number, gt, 'int16', arr_new)
     else:
     '''
-    in_raster_nuts_id_number = inputs_raster_selection['nuts_id_number']
+    in_raster_nuts_id_number = inputs_raster_selection['heat_tot_curr_density']
+    print("***************************** zzzzzzzzzzzz*********************************************************")
 
     graphics = CM2.main(sector, building_type, demand_type, year, gfa, r,
                               in_df_tech_info, in_df_energy_price,

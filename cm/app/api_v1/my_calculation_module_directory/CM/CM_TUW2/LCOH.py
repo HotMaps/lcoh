@@ -17,23 +17,33 @@ def levelized_costs_of_heat(energy_demand, heat_load, energy_price,
     Emissions: are not considered separately for the households. Depending on
     the country, it is sometimes indirectly included in the fuel costs.
     '''
+
+    r = float(r)
+    lt = float(lt)
+
+
+
     annuity = (r*(1+r)**lt)/((1+r)**lt - 1)
+
     # final energy demand
-    fed = energy_demand / efficiency_heatingsystem
+    fed = float(energy_demand) / float(efficiency_heatingsystem)
+
     # OPEX: Operational Expenditure
-    OPEX = fix_o_and_m * heat_load + var_o_and_m * fed
+    OPEX = float(fix_o_and_m) * float(heat_load) + float(var_o_and_m) * float(fed)
+
     # CAPEX: Capital Expenditure
-    CAPEX = heat_load * specific_investment_cost * annuity
+    CAPEX = float(heat_load) * float(specific_investment_cost) * float(annuity)
     # energy costs
-    energy_costs = fed * energy_price
+    energy_costs = float(fed) * float(energy_price)
     # total costs heat supply
-    total_costs = OPEX + CAPEX + energy_costs
+    total_costs = float(OPEX) + float(CAPEX) + float(energy_costs)
     # LCOH [EUR/MWh]
-    lcoh = total_costs / energy_demand
+    lcoh = float(total_costs) / float(energy_demand)
     '''
     # costs per capita [€/capita]
     lcohcapita = total_costs / population
     '''
+
     output = {'Final energy demand': round(float(fed), 2),
               'Capital Expenditure (CAPEX)': round(float(CAPEX), 2),
               'Operational Expenditure (OPEX)': round(float(OPEX), 2),

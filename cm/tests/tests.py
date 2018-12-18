@@ -38,7 +38,7 @@ class TestAPI(unittest.TestCase):
         inputs_vector_selection = {}
         inputs_raster_selection = {}
         inputs_parameter_selection = {}
-        inputs_raster_selection["nuts_id_number"]  = save_path
+        inputs_raster_selection["heat_tot_curr_density"]  = save_path
         import json
         with open(json_file_test) as json_data:
             d=json.load(json_data)
