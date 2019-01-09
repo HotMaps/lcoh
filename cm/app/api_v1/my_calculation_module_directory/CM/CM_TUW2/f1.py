@@ -113,7 +113,12 @@ def main(sector, building_type, demand_type, year, gfa, r, in_df_tech_info,
     19: k1_fixed_O_and_M
     20: k2_fixed_O_and_M
     '''
-    #TODO non services is not working
+    # since no separate data for service sector is available, the values for
+    # the multi family houses are considered for the service sector as well.
+    # TODO: once data of Service sector entered to the DB, delete the following
+    # lines.
+    if building_type == 'service':
+        building_type = 'new MFH'
     required_columns = return_columns(in_df_tech_info)
 
     print ('in_df_tech_info ', in_df_tech_info)
