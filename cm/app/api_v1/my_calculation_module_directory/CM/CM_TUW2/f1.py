@@ -60,7 +60,6 @@ def load_factor(nuts2_code, sector, hoc='heating'):
 def fuel_prices(df, nuts0_code, year, fuel_type_column=3,
                 fuel_cost_column=4):
     # filter dataframe based on nuts code and year
-    print("**************************************OOOOOOO fuel_prices********************************")
     df_filtered_val = df[df['year'] == int(year)].values
     fc = dict()
     for row in range(df_filtered_val.shape[0]):
@@ -160,15 +159,11 @@ def main(sector, building_type, demand_type, year, gfa, r, in_df_tech_info,
     var_o_and_m, lifetime, efficiency, k1_specific_investment_cost, \
     k2_specific_investment_cost, k1_fix_o_and_m, k2_fix_o_and_m = np.zeros(7)
     # b_type: building type ; b_lcoh: building levelized cost of heat
-    print("**************************************xx********************************")
+
 
     output = dict()
     building_status = dict()
     for key in building_status_energy_factor.keys():
-        print("**************************************xxx********************************")
-        print ("**************************************xxx********************************")
-        print("range",range(info_val.shape[0]))
-        print("type range",type(range(info_val.shape[0])))
         for i in range(info_val.shape[0]):
 
 
@@ -189,22 +184,17 @@ def main(sector, building_type, demand_type, year, gfa, r, in_df_tech_info,
 
 
             energy_price = energy_prices[fuel_type[technology]]
-            print("**************************************OOOOOOO heating********************************")
 
+            heat_load = 1
+            heating_energy_demand = 1
             if demand_type == 'heating':
-                print("**************************************heating********************************")
-                print("gfa ",gfa)
-                print("building_status_energy_factor ",building_status_energy_factor)
-                print("key ",key)
-                print("sp_heat ",sp_heat)
-                print("building_status_energy_factor[key] ",building_status_energy_factor[key])
-                print("sp_dhw ",sp_dhw)
+
                 heating_energy_demand =  float(gfa) * (float(building_status_energy_factor[key])  * float(sp_heat) + float(sp_dhw))
-                print("**************************************heating********************************")
+
                 # heat load in kW
                 heat_load = heating_energy_demand * factor
             else:
-                print("**************************************non heating********************************")
+
                 cooling_energy_demand = float(gfa) * float(sp_cold)
                 # cold load in kW
                 cooling_load = float(cooling_energy_demand) * float(factor)
@@ -213,10 +203,7 @@ def main(sector, building_type, demand_type, year, gfa, r, in_df_tech_info,
             try:
                 fix_o_and_m = float(k1_fix_o_and_m) * (float(heat_load)**(float(k2_specific_investment_cost)))
             except:
-                print('k1_fix_o_and_m: ', type(k1_fix_o_and_m))
-                print('heat_load: ', type(heat_load))
-                print('k2_specific_investment_cost: ', type(k2_specific_investment_cost))
-                print('factor: ', type(factor))
+
                 raise
 
             output[technology] = lcoh(heating_energy_demand, heat_load,
