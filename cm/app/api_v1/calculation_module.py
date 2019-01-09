@@ -5,7 +5,7 @@ path = os.path.dirname(os.path.abspath(__file__))
 if path not in sys.path:
     sys.path.append(path)
 from osgeo import gdal
-
+from ..exceptions import ValidationError,EmptyRasterError
 from ..helper import generate_output_file_tif
 import my_calculation_module_directory.CM.CM_TUW2.run_cm as CM2
 import my_calculation_module_directory.CM.CM_TUW19.run_cm as CM19
@@ -86,7 +86,11 @@ def calculation(output_directory, inputs_raster_selection,inputs_vector_selectio
         CM19.main(in_raster_nuts_id_number, gt, 'int16', arr_new)
     else:
     '''
-    in_raster_nuts_id_number = inputs_raster_selection['heat_tot_curr_density']
+
+    try:
+        in_raster_nuts_id_number = inputs_raster_selection['heat']
+    except:
+        raise EmptyRasterError
     print("*****************************")
 
     graphics = CM2.main(sector, building_type, demand_type, year, gfa, r,
