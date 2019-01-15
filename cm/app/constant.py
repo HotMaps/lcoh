@@ -14,6 +14,15 @@ PORT_DOCKER = 80
 PORT = PORT_DOCKER
 TRANFER_PROTOCOLE ='http://'
 INPUTS_CALCULATION_MODULE = [
+    {'input_name': 'Prefix for the outputs (max 10 character)',
+     'input_type': 'input',
+     'input_parameter_name': 'prefix',
+     'input_value': "",
+     'input_unit': "",
+     'input_min': "",
+     'input_max': "",
+     'cm_id': CM_ID
+     },
     {'input_name': 'Gross floor area',
      'input_type': 'input',
      'input_parameter_name': 'gfa',
@@ -96,7 +105,7 @@ SIGNATURE = {
 
     ],
     "cm_url": "Do not add something",
-    "cm_description": "this computation module calculates the levelized cost of heat/cold",
+    "cm_description": "This calclulation module calculates the levelized cost of heat for the various technologies.",
     "cm_id": CM_ID,
     'inputs_calculation_module': INPUTS_CALCULATION_MODULE
 }

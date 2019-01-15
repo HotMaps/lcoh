@@ -44,6 +44,7 @@ class TestAPI(unittest.TestCase):
             d=json.load(json_data)
         json_data.close()
         inputs_vector_selection['heating_technologies_eu28'] = d
+        inputs_parameter_selection["prefix"] = "prefix"
         inputs_parameter_selection["sector"] = "residential"
         inputs_parameter_selection["building_type"] = "Single family house"
         inputs_parameter_selection["demand_type"] = "heating"

@@ -197,6 +197,10 @@ def main(sector, building_type, demand_type, year, gfa, r, in_df_tech_info,
         building_status[key] = output
         output = None
         output = dict()
+    print("#########################\n", building_status,"#########################\n")
     
-    graphics = prj(building_status)
-    return graphics
+    graphics, indictor_list = prj(building_status)
+    
+    
+    
+    return graphics, indictor_list

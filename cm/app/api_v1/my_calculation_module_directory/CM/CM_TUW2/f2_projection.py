@@ -70,6 +70,18 @@ def projection_new(inDict):
     df2 = pd.read_json(temp2, orient='index')
     df3 = pd.read_json(temp3, orient='index')
     
+    # create indicator lists for the lowest LCOH in different building classes
+    indictor_list = []
+    for key0 in inDict.keys():
+        global_min = 1e10
+        best_tech = ""
+        temp_dict_1 = inDict[key0]
+        for key1 in temp_dict_1:
+            if temp_dict_1[key1]['Levelized costs of heat'] < global_min:
+                global_min = temp_dict_1[key1]['Levelized costs of heat']
+                best_tech = key1
+        indictor_list.append({"unit": "EUR/MWh", "name": "Lowest LCOH for the given parameters within the building class \"" + key0.upper() + "\" belongs to " + best_tech.upper(), "value": global_min})
+
     technologies = df1.index.tolist()
     values_for_test = np.concatenate((df1['Capital Expenditure (CAPEX)'].values, df2['Capital Expenditure (CAPEX)'].values, df3['Capital Expenditure (CAPEX)'].values))
     long_label_for_test = []
@@ -105,7 +117,7 @@ def projection_new(inDict):
                     }
                 }]
     print(graphics)
-    return graphics
+    return graphics, indictor_list
     
 
 
