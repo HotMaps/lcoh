@@ -42,7 +42,6 @@ def calculation(output_directory, inputs_raster_selection,inputs_vector_selectio
         out_csv_
         out_shp_
         out_raster_
-
     '''
 
     print("***************************** input parameters***********************************************************")
@@ -58,13 +57,12 @@ def calculation(output_directory, inputs_raster_selection,inputs_vector_selectio
     in_df_tech_info = create_dataframe(inputs_vector_selection['heating_technologies_eu28'])
     if verbose:
         csv_path = path +  '/my_calculation_module_directory/CSVs'
-        in_df_energy_price = pd.read_csv(csv_path + '/energy_price.csv')
+        in_df_energy_price = pd.read_csv(csv_path + '/AD.TUW2_fuel_costs.csv')
         in_df_specific_demand = pd.read_csv(csv_path + '/AD.EURAC.Ave_useful_h&c_demand.csv')
 
     else:
         in_df_energy_price = create_dataframe(inputs_vector_selection['input_energy_price'])
         in_df_specific_demand = create_dataframe(inputs_vector_selection['space_heating_cooling_dhw_top-down'])
-    
     # input raster
     '''
     if verbose:
@@ -86,13 +84,7 @@ def calculation(output_directory, inputs_raster_selection,inputs_vector_selectio
         CM19.main(in_raster_nuts_id_number, gt, 'int16', arr_new)
     else:
     '''
-
-    try:
-        in_raster_nuts_id_number = inputs_raster_selection['heat']
-    except:
-        raise EmptyRasterError
-    print("*****************************")
-
+    in_raster_nuts_id_number = inputs_raster_selection['nuts_id_number']
     graphics = CM2.main(sector, building_type, demand_type, year, gfa, r,
                               in_df_tech_info, in_df_energy_price,
                               in_df_specific_demand, in_raster_nuts_id_number)

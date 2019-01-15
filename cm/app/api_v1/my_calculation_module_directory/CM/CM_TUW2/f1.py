@@ -60,7 +60,7 @@ def load_factor(nuts2_code, sector, hoc='heating'):
 def fuel_prices(df, nuts0_code, year, fuel_type_column=3,
                 fuel_cost_column=4):
     # filter dataframe based on nuts code and year
-    df_filtered_val = df[df['year'] == int(year)].values
+    df_filtered_val = df[(df['year'] == int(year)) & (df['nuts0'] == nuts0_code)].values
     fc = dict()
     for row in range(df_filtered_val.shape[0]):
         f_type, f_cost = df_filtered_val[row, [3, 4]]
@@ -95,10 +95,16 @@ def main(sector, building_type, demand_type, year, gfa, r, in_df_tech_info,
                  'Wood stove': 'wood',
                  'Natural gas': 'gas',
                  'Solar thermal': 'solar'}
+    building_type_assignment = {
+            "Service sector (average)": "service",
+            "Single family house": "new SFH",
+            "Multi family house": "new MFH"
+            }
     building_status_energy_factor = {'existing building': 1,
                                      'renovated building': 0.5,
                                      'new building': 0.3
                                      }
+    building_type = building_type_assignment[building_type]
     nuts0, nuts1, nuts2, nuts3 = return_nuts_codes(in_raster_nuts_id_number)
     '''
     extract data from tech info sheet for the give country and year and
@@ -114,20 +120,12 @@ def main(sector, building_type, demand_type, year, gfa, r, in_df_tech_info,
     '''
     # since no separate data for service sector is available, the values for
     # the multi family houses are considered for the service sector as well.
-    # TODO: once data of Service sector entered to the DB, delete the following
-    # lines.
-    if building_type == 'service':
-        building_type = 'new MFH'
     required_columns = return_columns(in_df_tech_info)
-
-    print ('in_df_tech_info ', in_df_tech_info)
     info_val = in_df_tech_info[(in_df_tech_info['year'] == int(year)) &
                             (in_df_tech_info['type_of_building'].str.replace(" ", "") == building_type.replace(" ", ""))
                             ].values[:, required_columns]
-
-
-    print ('info_val ', info_val)
-
+    # TODO: cells that are empty are assigned a small value to avoid division
+    # by zero error
     info_val[info_val == 'None'] = '0.0001'
     info_val[:, 1:] = info_val[:, 1:].astype(float)
     in_df_tech_info = None
@@ -144,9 +142,8 @@ def main(sector, building_type, demand_type, year, gfa, r, in_df_tech_info,
             (in_df_specific_demand['nuts0_code'] == nuts0) &
             (in_df_specific_demand['sector'] == sector)
             ].values[:, [2, 3, 4]][0]
-    # default values for missing data in csv data set; flag for use of default
-    # values.
-
+    # TODO: data base should become complete! default values for missing data
+    # in csv data set; flag for use of default values.
     default_dict = {
             'var_o_and_m': 0.025,
             'lifetime': 20,
@@ -159,7 +156,6 @@ def main(sector, building_type, demand_type, year, gfa, r, in_df_tech_info,
     var_o_and_m, lifetime, efficiency, k1_specific_investment_cost, \
     k2_specific_investment_cost, k1_fix_o_and_m, k2_fix_o_and_m = np.zeros(7)
     # b_type: building type ; b_lcoh: building levelized cost of heat
-
 
     output = dict()
     building_status = dict()
@@ -181,31 +177,20 @@ def main(sector, building_type, demand_type, year, gfa, r, in_df_tech_info,
                 var_o_and_m, lifetime, efficiency, \
                 k1_specific_investment_cost, k2_specific_investment_cost, \
                 k1_fix_o_and_m, k2_fix_o_and_m = default_dict.values()
-
-
             energy_price = energy_prices[fuel_type[technology]]
 
             heat_load = 1
             heating_energy_demand = 1
             if demand_type == 'heating':
-
                 heating_energy_demand =  float(gfa) * (float(building_status_energy_factor[key])  * float(sp_heat) + float(sp_dhw))
-
                 # heat load in kW
                 heat_load = heating_energy_demand * factor
             else:
-
                 cooling_energy_demand = float(gfa) * float(sp_cold)
                 # cold load in kW
                 cooling_load = float(cooling_energy_demand) * float(factor)
             specific_investment_cost = float(k1_specific_investment_cost) * float(heat_load)**float(k2_specific_investment_cost)
-            #TODO non heating is not working
-            try:
-                fix_o_and_m = float(k1_fix_o_and_m) * (float(heat_load)**(float(k2_specific_investment_cost)))
-            except:
-
-                raise
-
+            fix_o_and_m = float(k1_fix_o_and_m) * (float(heat_load)**(float(k2_specific_investment_cost)))
             output[technology] = lcoh(heating_energy_demand, heat_load,
                   energy_price, specific_investment_cost, fix_o_and_m,
                   var_o_and_m, efficiency, r, lifetime)
