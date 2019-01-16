@@ -38,19 +38,21 @@ class TestAPI(unittest.TestCase):
         inputs_vector_selection = {}
         inputs_raster_selection = {}
         inputs_parameter_selection = {}
-        inputs_raster_selection["heat"]  = save_path
+        inputs_raster_selection["nuts_id_number"]  = save_path
         import json
         with open(json_file_test) as json_data:
             d=json.load(json_data)
         json_data.close()
         inputs_vector_selection['heating_technologies_eu28'] = d
+        inputs_parameter_selection["prefix"] = "prefix"
         inputs_parameter_selection["sector"] = "residential"
-        inputs_parameter_selection["building_type"] = "new SFH"
+        inputs_parameter_selection["building_type"] = "Multi family house"
+        inputs_parameter_selection["building_class"] = "New building"
         inputs_parameter_selection["demand_type"] = "heating"
         inputs_parameter_selection["year"] = 2015
         inputs_parameter_selection["gfa"] = 100
         inputs_parameter_selection["r"] = 0.05
-        df = None
+        d = None
         # register the calculation module a
         payload = {"inputs_raster_selection": inputs_raster_selection,
                    "inputs_vector_selection": inputs_vector_selection,

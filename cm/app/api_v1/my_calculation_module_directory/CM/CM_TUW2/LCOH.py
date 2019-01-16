@@ -10,34 +10,37 @@ def levelized_costs_of_heat(energy_demand, heat_load, energy_price,
                             specific_investment_cost, fix_o_and_m, var_o_and_m,
                             efficiency_heatingsystem, r, lt):
     '''
-    This function calculates the levelized costs of heat (LCOH) in EUR/MWh for
+    This function calculates the levelized costs of heat (LCOH) in EUR/kWh for
     a residential building.
     TAX: Due to wide range of taxation methods and tax refunds in different
     countries, it is not considered here.
     Emissions: are not considered separately for the households. Depending on
     the country, it is sometimes indirectly included in the fuel costs.
+    energy_demand [kWh]
+    heat_load [kW]
+    energy_price [EUR/kWh]
+    specific_investment_cost [EUR/kW]
+    fix_o_and_m [EUR/kW]
+    var_o_and_m [EUR/kWh]
+    
     '''
-
     r = float(r)
     lt = float(lt)
-
-
-
     annuity = (r*(1+r)**lt)/((1+r)**lt - 1)
 
     # final energy demand
     fed = float(energy_demand) / float(efficiency_heatingsystem)
 
-    # OPEX: Operational Expenditure
+    # OPEX: Operational Expenditure (EUR)
     OPEX = float(fix_o_and_m) * float(heat_load) + float(var_o_and_m) * float(fed)
 
-    # CAPEX: Capital Expenditure
+    # CAPEX: Capital Expenditure (EUR)
     CAPEX = float(heat_load) * float(specific_investment_cost) * float(annuity)
-    # energy costs
+    # energy costs (EUR)
     energy_costs = float(fed) * float(energy_price)
-    # total costs heat supply
+    # total costs heat supply (EUR)
     total_costs = float(OPEX) + float(CAPEX) + float(energy_costs)
-    # LCOH [EUR/MWh]
+    # LCOH [EUR/kWh]
     lcoh = float(total_costs) / float(energy_demand)
     '''
     # costs per capita [€/capita]
