@@ -5,13 +5,11 @@ path = os.path.dirname(os.path.abspath(__file__))
 if path not in sys.path:
     sys.path.append(path)
 from osgeo import gdal
-from ..exceptions import ValidationError,EmptyRasterError
-from ..helper import generate_output_file_tif
+#from ..exceptions import ValidationError,EmptyRasterError
+#from ..helper import generate_output_file_tif
 import my_calculation_module_directory.CM.CM_TUW2.run_cm as CM2
-import my_calculation_module_directory.CM.CM_TUW19.run_cm as CM19
-from my_calculation_module_directory.CM.CM_TUW1.read_raster import raster_array
-
-
+#import my_calculation_module_directory.CM.CM_TUW19.run_cm as CM19
+#from my_calculation_module_directory.CM.CM_TUW1.read_raster import raster_array
 verbose = True
 
 
@@ -22,39 +20,38 @@ def create_dataframe(input_dict):
     return df
 
 
-""" Entry point of the calculation module function"""
-
-#TODO: CM provider must "change this code"
-#TODO: CM provider must "not change input_raster_selection,output_raster  1 raster input => 1 raster output"
-#TODO: CM provider can "add all the parameters he needs to run his CM
-#TODO: CM provider can "return as many indicators as he wants"
 def calculation(output_directory, inputs_raster_selection,inputs_vector_selection, inputs_parameter_selection):
-
     """ def calculation()"""
     '''
     inputs:
-        indicator_
-        in_csv_
-        in_shp_
-        in_raster_
+        prefix: for naming of the outputs
+        sector: residential or service
+        building type: single family or multi family house
+        building class: existing, renovated or new building
+        demand type: heating or cooling
+        year: year to be calculated for
+        gfa: gross floor area of the building
+        r: interest rate
+        in_df_tech_info: input csv including the technologies and their parameters
+        in_df_energy_price: energy carrier price
+        in_df_specific_demand: specific heating or cooling demand in a country
+        
 
     Outputs:
-        out_csv_
-        out_shp_
-        out_raster_
+        are in form of graphs and indicators
     '''
-
-    print("***************************** input parameters***********************************************************")
-    prefix = inputs_parameter_selection["prefix"]
+    # ***************************** input parameters**************************
+    prefix = str(inputs_parameter_selection["prefix"])
     sector = inputs_parameter_selection["sector"]
     building_type = inputs_parameter_selection["building_type"]
+    building_class = inputs_parameter_selection["building_class"]
     demand_type = inputs_parameter_selection["demand_type"]
     year = inputs_parameter_selection["year"]
     gfa = inputs_parameter_selection["gfa"]
     r = inputs_parameter_selection["r"]
 
 
-    print("***************************** # input rows from CSV DB and create dataframe**********************************************************")
+    # *********** # input rows from CSV DB and create dataframe***************
     in_df_tech_info = create_dataframe(inputs_vector_selection['heating_technologies_eu28'])
     if verbose:
         csv_path = path +  '/my_calculation_module_directory/CSVs'
@@ -91,12 +88,13 @@ def calculation(output_directory, inputs_raster_selection,inputs_vector_selectio
     else:
     '''
     in_raster_nuts_id_number = inputs_raster_selection['nuts_id_number']
-    graphics, indictor_list = CM2.main(sector, building_type, demand_type, year, gfa, r,
-                              in_df_tech_info, in_df_energy_price,
-                              in_df_specific_demand, in_raster_nuts_id_number)
+    graphics, indictor_list = CM2.main(sector, building_type, building_class,
+                                       demand_type, year, gfa, r,
+                                       in_df_tech_info, in_df_energy_price,
+                                       in_df_specific_demand,
+                                       in_raster_nuts_id_number)
     result = dict()
     result['name'] = prefix + 'CM Levelized Cost of Heat'
-
     result['indicator'] = indictor_list
     result['graphics'] = graphics
     return result

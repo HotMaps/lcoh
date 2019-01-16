@@ -46,7 +46,8 @@ class TestAPI(unittest.TestCase):
         inputs_vector_selection['heating_technologies_eu28'] = d
         inputs_parameter_selection["prefix"] = "prefix"
         inputs_parameter_selection["sector"] = "residential"
-        inputs_parameter_selection["building_type"] = "Single family house"
+        inputs_parameter_selection["building_type"] = "Multi family house"
+        inputs_parameter_selection["building_class"] = "New building"
         inputs_parameter_selection["demand_type"] = "heating"
         inputs_parameter_selection["year"] = 2015
         inputs_parameter_selection["gfa"] = 100

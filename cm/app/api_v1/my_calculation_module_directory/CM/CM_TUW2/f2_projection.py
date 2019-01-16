@@ -1,7 +1,5 @@
 import os
 import sys
-import matplotlib.pyplot as plt
-import numpy as np
 import pandas as pd
 path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.
                                                        abspath(__file__))))
@@ -9,131 +7,42 @@ if path not in sys.path:
     sys.path.append(path)
 
 
-def data_matrix(inDict, building_class, techs, data_components,
-                colors=('r', 'y', 'b')):
-    N_bc = len(building_class)
-    N_tech = len(techs)
-    N_comp = len(data_components)
-    data = np.zeros((N_bc, N_tech, N_comp))
-    ind = np.delete(np.arange(3*N_tech + 2), [N_tech, 2*N_tech])
-    _width = 0.35
-    fig, ax = plt.subplots()
-    for i, item0 in enumerate(building_class):
-        for j, item1 in enumerate(techs):
-            for k, item2 in enumerate(data_components):
-                data[i, j, k] = inDict[item0][item1][item2]
-    bottom = np.zeros(N_bc * N_tech)
-    for i in range(N_comp):
-        temp = data[:, :, i].flatten()
-        ax.bar(ind, temp, _width, bottom=bottom, align='center', color=colors[i])
-        bottom += temp
-    plt.xticks(rotation=45)
-    ax.set_xticks(ind)
-    ax.set_xticklabels(techs*N_bc)
-    ax.legend(data_components*N_bc, loc='upper right')
-    plt.show()
-    fig = ax = None
-    
-
-    
-    graphics  = [
-            {
-                    "type": "bar",
-                    "xLabel": "",
-                    "yLabel": "Potential(GWh/year)",
-                    "data": {
-                            "labels": [str(x) for x in range(len(DHPot))],
-                            "datasets": [{
-                                    "label": "Calculation module chart",
-                                    "backgroundColor": ["#3e95cd"]*len(DHPot),
-                                    "data": list(DHPot)
-                                    }]
-                    }
-                }]
-    
-    
-    
-
-
-
-
-def projection_new(inDict):
-    keys = list(inDict.keys())
-    temp1 = str(inDict[keys[0]])
-    print('temp1: ', temp1)
+def projection_new(inDict, building_class):
+    temp1 = str(inDict)
     temp1 = temp1.replace("\'","\"")
-    temp2 = str(inDict[keys[1]])
-    temp2 = temp2.replace("\'","\"")
-    temp3 = str(inDict[keys[2]])
-    temp3 = temp3.replace("\'","\"")
     df1 = pd.read_json(temp1, orient='index')
-    df2 = pd.read_json(temp2, orient='index')
-    df3 = pd.read_json(temp3, orient='index')
-    
+
     # create indicator lists for the lowest LCOH in different building classes
     indictor_list = []
-    for key0 in inDict.keys():
-        global_min = 1e10
-        best_tech = ""
-        temp_dict_1 = inDict[key0]
-        for key1 in temp_dict_1:
-            if temp_dict_1[key1]['Levelized costs of heat'] < global_min:
-                global_min = temp_dict_1[key1]['Levelized costs of heat']
-                best_tech = key1
-        indictor_list.append({"unit": "EUR/MWh", "name": "Lowest LCOH for the given parameters within the building class \"" + key0.upper() + "\" belongs to " + best_tech.upper(), "value": global_min})
-
+    global_min = 1e10
+    best_tech = ""
+    for key1 in inDict.keys():
+        if inDict[key1]['Levelized costs of heat'] < global_min:
+            global_min = inDict[key1]['Levelized costs of heat']
+            best_tech = key1
+    indictor_list.append({"unit": "EUR/kWh", "name": "Lowest LCOH for the given parameters within the building class \"" + building_class.upper() + "\" belongs to " + best_tech.upper(), "value": global_min})
+    
+    # create bar charts
     technologies = df1.index.tolist()
-    values_for_test = np.concatenate((df1['Capital Expenditure (CAPEX)'].values, df2['Capital Expenditure (CAPEX)'].values, df3['Capital Expenditure (CAPEX)'].values))
-    long_label_for_test = []
-    for key in keys:
-        for tech in technologies:
-            long_label_for_test.append(key + "_" + tech)
-    
-    graphics  = [
-            {
-                    "type": "bar",
-                    "xLabel": "Technologies",
-                    "yLabel": 'CAPEX (EUR)',
-                    "data": {
-                            "labels": df1.index.tolist(),
-                            "datasets": [{
-                                    "label": "CAPEX for " + keys[0],
-                                    "backgroundColor": ["#3e95cd"]*len(df1.index.tolist()),
-                                    "data": list(df1['Capital Expenditure (CAPEX)'].values)
-                                    }]
-                    }
-                },
-            {
-                    "type": "bar",
-                    "xLabel": "Technologies",
-                    "yLabel": 'CAPEX (EUR)',
-                    "data": {
-                            "labels": long_label_for_test,
-                            "datasets": [{
-                                    "label": "CAPEX for all building types",
-                                    "backgroundColor": ["#3e95cd"]*len(df1.index.tolist()),
-                                    "data": list(values_for_test)
-                                    }]
-                    }
-                }]
-    print(graphics)
+    economic_parameters = list(df1.columns)
+    yLabel_dict = {
+            'Capital Expenditure (CAPEX)': "CAPEX (EUR)",
+            'Energy costs': "Energy Costs (EUR)",
+            'Final energy demand': "Final Energy Demand (kWh)",
+            'Levelized costs of heat': "LCOH (EUR/kWh)",
+            'Operational Expenditure (OPEX)': "OPEX (EUR)",
+            'Total costs': "Total Costs (EUR)"
+            }
+    num_of_bars = len(technologies)
+    graphics = [] 
+    for parameter in economic_parameters:
+        temp = {"type": "bar",
+                "xLabel": "Technologies",
+                "yLabel": yLabel_dict[parameter],
+                "data": {"labels": df1.index.tolist(),
+                         "datasets": [{"label": yLabel_dict[parameter],
+                                       "backgroundColor": ["#3e95cd"]*num_of_bars,
+                                       "data": list(df1[parameter].values)}]
+                                       }}
+        graphics.append(temp)
     return graphics, indictor_list
-    
-
-
-
-
-
-
-def projection_old(inDict):
-    building_class = list(inDict.keys())
-    techs = list(inDict[building_class[0]].keys())
-    components = ['Capital Expenditure (CAPEX)',
-                  'Operational Expenditure (OPEX)',
-                  'Energy costs',
-                  'Levelized costs of heat',
-                  'Final energy demand']
-    data_matrix(inDict, building_class, techs, components[:3], ('r', 'y', 'b'))
-    data_matrix(inDict, building_class, techs, components[3:4], ('g'))
-    data_matrix(inDict, building_class, techs, components[4:], ('b'))
-

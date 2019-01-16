@@ -67,6 +67,19 @@ INPUTS_CALCULATION_MODULE = [
       'input_max': '',
       'cm_id': CM_ID
       },
+      {
+      'input_name': 'Building class',
+      'input_type': 'select',
+      'input_parameter_name': "building_class",
+      'input_value': ["Existing building",
+                      "Renovated building",
+                      "New building"
+                      ],
+      'input_unit': '',
+      'input_min': '',
+      'input_max': '',
+      'cm_id': CM_ID
+      },
      {
       'input_name': 'Demand type',
       'input_type': 'select',
@@ -105,7 +118,11 @@ SIGNATURE = {
 
     ],
     "cm_url": "Do not add something",
-    "cm_description": "This calclulation module calculates the levelized cost of heat for the various technologies.",
+    "cm_description": "This calclulation module calculates the levelized " \
+    "cost of heat (LCOH) for the various technologies. As output, the result " \
+    "for a technology with lowest LCOH is shown. This result will be shown " \
+    "for three building classes, namely: existing building, renovated " \
+    "building and new building.",
     "cm_id": CM_ID,
     'inputs_calculation_module': INPUTS_CALCULATION_MODULE
 }

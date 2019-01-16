@@ -69,8 +69,9 @@ def fuel_prices(df, nuts0_code, year, fuel_type_column=3,
     return fc
 
 
-def main(sector, building_type, demand_type, year, gfa, r, in_df_tech_info,
-         in_df_energy_price, in_df_specific_demand, in_raster_nuts_id_number):
+def main(sector, building_type, demand_type, building_class, year, gfa, r,
+         in_df_tech_info, in_df_energy_price, in_df_specific_demand,
+         in_raster_nuts_id_number):
     '''
     # check input types
     if sector not in ('residential', 'service'):
@@ -100,10 +101,11 @@ def main(sector, building_type, demand_type, year, gfa, r, in_df_tech_info,
             "Single family house": "new SFH",
             "Multi family house": "new MFH"
             }
-    building_status_energy_factor = {'existing building': 1,
-                                     'renovated building': 0.5,
-                                     'new building': 0.3
-                                     }
+    building_class_energy_factor = {
+            "Existing building": 1,
+            "Renovated building": 0.5,
+            "New building": 0.3
+            }
     building_type = building_type_assignment[building_type]
     nuts0, nuts1, nuts2, nuts3 = return_nuts_codes(in_raster_nuts_id_number)
     '''
@@ -157,49 +159,40 @@ def main(sector, building_type, demand_type, year, gfa, r, in_df_tech_info,
     k2_specific_investment_cost, k1_fix_o_and_m, k2_fix_o_and_m = np.zeros(7)
     # b_type: building type ; b_lcoh: building levelized cost of heat
 
-    output = dict()
-    building_status = dict()
-    for key in building_status_energy_factor.keys():
-        for i in range(info_val.shape[0]):
-
-
-            technology, var_o_and_m, lifetime, efficiency, \
+    report_dict = dict()
+    for i in range(info_val.shape[0]):
+        technology, var_o_and_m, lifetime, efficiency, \
+        k1_specific_investment_cost, k2_specific_investment_cost, \
+        k1_fix_o_and_m, k2_fix_o_and_m = info_val[i, :]
+        # DH is not considered as decentral heating system.
+        if technology == 'DH substation':
+            continue
+        if 'None' in info_val[i, :]:
+            print('Data base has some missing numbers. Please contact the \
+                  the data provider. The outputs are not correct.')
+            print('The following parameters are used instead of missing \
+                  data: \n\t', default_dict)
+            var_o_and_m, lifetime, efficiency, \
             k1_specific_investment_cost, k2_specific_investment_cost, \
-            k1_fix_o_and_m, k2_fix_o_and_m = info_val[i, :]
-            # DH is not considered as decentral heating system.
-            if technology == 'DH substation':
-                continue
-            if 'None' in info_val[i, :]:
-                print('Data base has some missing numbers. Please contact the \
-                      the data provider. The outputs are not correct.')
-                print('The following parameters are used instead of missing \
-                      data: \n\t', default_dict)
-                var_o_and_m, lifetime, efficiency, \
-                k1_specific_investment_cost, k2_specific_investment_cost, \
-                k1_fix_o_and_m, k2_fix_o_and_m = default_dict.values()
-            energy_price = energy_prices[fuel_type[technology]]
-
-            heat_load = 1
-            heating_energy_demand = 1
-            if demand_type == 'heating':
-                heating_energy_demand =  float(gfa) * (float(building_status_energy_factor[key])  * float(sp_heat) + float(sp_dhw))
-                # heat load in kW
-                heat_load = heating_energy_demand * factor
-            else:
-                cooling_energy_demand = float(gfa) * float(sp_cold)
-                # cold load in kW
-                cooling_load = float(cooling_energy_demand) * float(factor)
-            specific_investment_cost = float(k1_specific_investment_cost) * float(heat_load)**float(k2_specific_investment_cost)
-            fix_o_and_m = float(k1_fix_o_and_m) * (float(heat_load)**(float(k2_specific_investment_cost)))
-            output[technology] = lcoh(heating_energy_demand, heat_load,
-                  energy_price, specific_investment_cost, fix_o_and_m,
-                  var_o_and_m, efficiency, r, lifetime)
-        building_status[key] = output
-        output = None
-        output = dict()
-    print("#########################\n", building_status,"#########################\n")
-    
-    graphics, indictor_list = prj(building_status)
+            k1_fix_o_and_m, k2_fix_o_and_m = default_dict.values()
+        energy_price = energy_prices[fuel_type[technology]]
+        if demand_type == 'heating':
+            # energy demand in kWh
+            heating_energy_demand =  float(gfa) * (float(building_class_energy_factor[building_class])  * float(sp_heat) + float(sp_dhw))
+            # heat load in kW
+            heat_load = heating_energy_demand * factor
+        else:
+            cooling_energy_demand = float(gfa) * float(sp_cold)
+            # cold load in kW
+            cooling_load = float(cooling_energy_demand) * float(factor)
+        # specific investment cost in EUR/kW
+        specific_investment_cost = float(k1_specific_investment_cost) * float(heat_load)**float(k2_specific_investment_cost)
+        # EUR/kW
+        fix_o_and_m = float(k1_fix_o_and_m) * (float(heat_load)**(float(k2_specific_investment_cost)))
+        report_dict[technology] = lcoh(heating_energy_demand, heat_load,
+                       energy_price, specific_investment_cost, fix_o_and_m,
+                       var_o_and_m, efficiency, r, lifetime)
+    graphics, indictor_list = prj(report_dict, building_class)
     
     
     
