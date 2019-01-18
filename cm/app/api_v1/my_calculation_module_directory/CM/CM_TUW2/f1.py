@@ -126,9 +126,9 @@ def main(sector, building_type, demand_type, building_class, year, gfa, r,
     info_val = in_df_tech_info[(in_df_tech_info['year'] == int(year)) &
                             (in_df_tech_info['type_of_building'].str.replace(" ", "") == building_type.replace(" ", ""))
                             ].values[:, required_columns]
-    # TODO: cells that are empty are assigned a small value to avoid division
-    # by zero error
-    info_val[info_val == 'None'] = '0.0001'
+    # TODO: cells that are empty are assigned -1 to avoid division
+    # by zero or other types of errors
+    info_val[info_val == 'None'] = '-1'
     info_val[:, 1:] = info_val[:, 1:].astype(float)
     in_df_tech_info = None
 
@@ -161,9 +161,17 @@ def main(sector, building_type, demand_type, building_class, year, gfa, r,
 
     report_dict = dict()
     for i in range(info_val.shape[0]):
-        technology, var_o_and_m, lifetime, efficiency, \
-        k1_specific_investment_cost, k2_specific_investment_cost, \
-        k1_fix_o_and_m, k2_fix_o_and_m = info_val[i, :]
+        # TODO: All cells from csv file that have "none" value, are substitute
+        # with default values. This should not happen.
+        if -1 in info_val[i, 1:]:
+            technology = info_val[i, 0]
+            var_o_and_m, lifetime, efficiency, \
+            k1_specific_investment_cost, k2_specific_investment_cost, \
+            k1_fix_o_and_m, k2_fix_o_and_m = np.array([0, 25, 1.02, 797, -0.43, 71, -0.64])
+        else:
+            technology, var_o_and_m, lifetime, efficiency, \
+            k1_specific_investment_cost, k2_specific_investment_cost, \
+            k1_fix_o_and_m, k2_fix_o_and_m = info_val[i, :]
         # DH is not considered as decentral heating system.
         if technology == 'DH substation':
             continue
@@ -193,7 +201,4 @@ def main(sector, building_type, demand_type, building_class, year, gfa, r,
                        energy_price, specific_investment_cost, fix_o_and_m,
                        var_o_and_m, efficiency, r, lifetime)
     graphics, indictor_list = prj(report_dict, building_class)
-    
-    
-    
     return graphics, indictor_list

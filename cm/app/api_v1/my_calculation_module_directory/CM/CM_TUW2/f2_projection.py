@@ -11,7 +11,6 @@ def projection_new(inDict, building_class):
     temp1 = str(inDict)
     temp1 = temp1.replace("\'","\"")
     df1 = pd.read_json(temp1, orient='index')
-
     # create indicator lists for the lowest LCOH in different building classes
     indictor_list = []
     global_min = 1e10
@@ -22,6 +21,13 @@ def projection_new(inDict, building_class):
             best_tech = key1
     indictor_list.append({"unit": "EUR/kWh", "name": "Lowest LCOH for the given parameters within the building class \"" + building_class.upper() + "\" belongs to " + best_tech.upper(), "value": global_min})
     
+    for key1 in inDict.keys():
+        if key1 == best_tech:
+            continue
+        lcoh = inDict[key1]['Levelized costs of heat']
+        # indictor_list.append({"unit": "EUR/kWh", "name": "Levelized cost of heat for the given parameters within the building class \"" + building_class.upper() + "\" for the technology: " + best_tech.upper(), "value": lcoh})
+        indictor_list.append({"unit": "EUR/kWh", "name": "LCOH in building class \"" + building_class.upper() + "\" for the technology: " + best_tech.upper(), "value": lcoh})
+
     # create bar charts
     technologies = df1.index.tolist()
     economic_parameters = list(df1.columns)
