@@ -175,14 +175,6 @@ def main(sector, building_type, demand_type, building_class, year, gfa, r,
         # DH is not considered as decentral heating system.
         if technology == 'DH substation':
             continue
-        if 'None' in info_val[i, :]:
-            print('Data base has some missing numbers. Please contact the \
-                  the data provider. The outputs are not correct.')
-            print('The following parameters are used instead of missing \
-                  data: \n\t', default_dict)
-            var_o_and_m, lifetime, efficiency, \
-            k1_specific_investment_cost, k2_specific_investment_cost, \
-            k1_fix_o_and_m, k2_fix_o_and_m = default_dict.values()
         energy_price = energy_prices[fuel_type[technology]]
         if demand_type == 'heating':
             # energy demand in kWh
