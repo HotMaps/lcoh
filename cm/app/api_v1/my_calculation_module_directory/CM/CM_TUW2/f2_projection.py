@@ -30,14 +30,15 @@ def projection_new(inDict, building_class):
 
     # create bar charts
     technologies = df1.index.tolist()
-    economic_parameters = list(df1.columns)
+    # economic_parameters = list(df1.columns)
+    economic_parameters = ['Energy costs', 'Levelized costs of heat', 'Total costs']
     yLabel_dict = {
             'Capital Expenditure (CAPEX)': "CAPEX (EUR)",
             'Energy costs': "Energy Costs (EUR)",
             'Final energy demand': "Final Energy Demand (kWh)",
             'Levelized costs of heat': "LCOH (EUR/kWh)",
             'Operational Expenditure (OPEX)': "OPEX (EUR)",
-            'Total costs': "Total Costs (EUR)"
+            'Total costs': "Total Annual Costs (EUR)"
             }
     num_of_bars = len(technologies)
     graphics = [] 
