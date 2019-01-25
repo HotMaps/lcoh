@@ -22,7 +22,7 @@ def levelized_costs_of_heat(energy_demand, heat_load, energy_price,
     specific_investment_cost [EUR/kW]
     fix_o_and_m [EUR/kW]
     var_o_and_m [EUR/kWh]
-    
+    LCOH [EUR/MWh]
     '''
     r = float(r)
     lt = float(lt)
@@ -43,11 +43,12 @@ def levelized_costs_of_heat(energy_demand, heat_load, energy_price,
     energy_costs = float(fed) * float(energy_price)
     # total costs heat supply (EUR)
     total_costs = float(OPEX) + float(CAPEX) + float(energy_costs)
-    # LCOH [EUR/kWh]
+    # LCOH [EUR/MWh]
     if energy_demand == 0:
         lcoh = 0
     else:
-        lcoh = float(total_costs) / float(energy_demand)
+        # kWh to MWh
+        lcoh = float(total_costs) / float(energy_demand) * 1000
     '''
     # costs per capita [€/capita]
     lcohcapita = total_costs / population

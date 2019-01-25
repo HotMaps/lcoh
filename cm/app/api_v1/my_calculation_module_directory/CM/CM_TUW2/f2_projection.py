@@ -19,14 +19,14 @@ def projection_new(inDict, building_class):
         if inDict[key1]['Levelized costs of heat'] < global_min:
             global_min = inDict[key1]['Levelized costs of heat']
             best_tech = key1
-    indictor_list.append({"unit": "EUR/kWh", "name": "Lowest LCOH for the given parameters within the building class \"" + building_class.upper() + "\" belongs to " + best_tech.upper(), "value": global_min})
+    indictor_list.append({"unit": "EUR/MWh", "name": "Lowest LCOH for the given parameters within the building class \"" + building_class.upper() + "\" belongs to " + best_tech.upper(), "value": global_min})
     
     for key1 in inDict.keys():
         if key1 == best_tech:
             continue
         lcoh = inDict[key1]['Levelized costs of heat']
-        # indictor_list.append({"unit": "EUR/kWh", "name": "Levelized cost of heat for the given parameters within the building class \"" + building_class.upper() + "\" for the technology: " + best_tech.upper(), "value": lcoh})
-        indictor_list.append({"unit": "EUR/kWh", "name": "LCOH in building class \"" + building_class.upper() + "\" for the technology: " + best_tech.upper(), "value": lcoh})
+        # indictor_list.append({"unit": "EUR/MWh", "name": "Levelized cost of heat for the given parameters within the building class \"" + building_class.upper() + "\" for the technology: " + best_tech.upper(), "value": lcoh})
+        indictor_list.append({"unit": "EUR/MWh", "name": "LCOH in building class \"" + building_class.upper() + "\" for the technology: " + best_tech.upper(), "value": lcoh})
 
     # create bar charts
     technologies = df1.index.tolist()
@@ -36,7 +36,7 @@ def projection_new(inDict, building_class):
             'Capital Expenditure (CAPEX)': "CAPEX (EUR)",
             'Energy costs': "Energy Costs (EUR)",
             'Final energy demand': "Final Energy Demand (kWh)",
-            'Levelized costs of heat': "LCOH (EUR/kWh)",
+            'Levelized costs of heat': "LCOH (EUR/MWh)",
             'Operational Expenditure (OPEX)': "OPEX (EUR)",
             'Total costs': "Total Annual Costs (EUR)"
             }
