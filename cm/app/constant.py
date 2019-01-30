@@ -17,15 +17,7 @@ PORT = PORT_DOCKER
 #TODO:**********************************************************
 TRANFER_PROTOCOLE ='http://'
 INPUTS_CALCULATION_MODULE = [
-    {'input_name': 'Prefix for outputs (max 10 characters)',
-     'input_type': 'input',
-     'input_parameter_name': 'prefix',
-     'input_value': "",
-     'input_unit': "",
-     'input_min': "",
-     'input_max': "",
-     'cm_id': CM_ID
-     },
+
     {'input_name': 'Gross floor area',
      'input_type': 'input',
      'input_parameter_name': 'gfa',
@@ -110,6 +102,7 @@ SIGNATURE = {
     "category": "Buildings",
     "authorized_scale":["NUTS 2", "NUTS 3","LAU 2","Hectare"],
     "cm_name": CM_NAME,
+    "description_link": "",
     "layers_needed": [
             "nuts_id_number"
             ],

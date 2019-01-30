@@ -24,7 +24,8 @@ def calculation(output_directory, inputs_raster_selection,inputs_vector_selectio
     """ def calculation()"""
     '''
     inputs:
-        prefix: for naming of the outputs
+
+
         sector: residential or service
         building type: single family or multi family house
         building class: existing, renovated or new building
@@ -41,7 +42,7 @@ def calculation(output_directory, inputs_raster_selection,inputs_vector_selectio
         are in form of graphs and indicators
     '''
     # ***************************** input parameters**************************
-    prefix = str(inputs_parameter_selection["prefix"])
+
     sector = inputs_parameter_selection["sector"]
     building_type = inputs_parameter_selection["building_type"]
     building_class = inputs_parameter_selection["building_class"]
@@ -62,10 +63,7 @@ def calculation(output_directory, inputs_raster_selection,inputs_vector_selectio
         in_df_energy_price = create_dataframe(inputs_vector_selection['input_energy_price'])
         in_df_specific_demand = create_dataframe(inputs_vector_selection['space_heating_cooling_dhw_top-down'])
     
-    if len(prefix) > 10:
-        raise ValueError("The length of the prefix may not exceed 10 characters!")
-    if len(prefix) > 0:
-        prefix = prefix + " - "
+
     # input raster
     '''
     if verbose:
@@ -94,7 +92,7 @@ def calculation(output_directory, inputs_raster_selection,inputs_vector_selectio
                                        in_df_specific_demand,
                                        in_raster_nuts_id_number)
     result = dict()
-    result['name'] = prefix + 'CM Levelized Cost of Heat'
+    result['name'] = 'CM Levelized Cost of Heat'
     result['indicator'] = indictor_list
     result['graphics'] = graphics
     return result
