@@ -21,3 +21,4 @@ pandas
 networkx
 pyomo
 matplotlib
+numpy==1.12.0
