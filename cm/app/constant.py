@@ -5,7 +5,7 @@ CELERY_BROKER_URL_LOCAL = 'amqp://localhost/'
 
 CM_REGISTER_Q = 'rpc_queue_CM_register' # Do no change this value
 
-CM_NAME = 'Levelized cost of heat'
+CM_NAME = 'Decentral heating costs - test'
 RPC_CM_ALIVE= 'rpc_queue_CM_ALIVE' # Do no change this value
 RPC_Q = 'rpc_queue_CM_compute' # Do no change this value
 CM_ID = 5 # CM_ID is defined by the enegy research center of Martigny (CREM)
@@ -115,10 +115,9 @@ SIGNATURE = {
     ],
     "cm_url": "Do not add something",
     "cm_description": "This calclulation module calculates the levelized " \
-    "cost of heat (LCOH) for the various technologies. As output, the result " \
-    "for a technology with lowest LCOH is shown. This result will be shown " \
-    "for three building classes, namely: existing building, renovated " \
-    "building and new building.",
+    "cost of heat (LCOH) for the various technologies. The results will be shown " \
+    "for the selected building class, building and new building. \n\nNote: In the current " \
+    "version, dummy input values have been used!",
     "cm_id": CM_ID,
     'inputs_calculation_module': INPUTS_CALCULATION_MODULE
 }

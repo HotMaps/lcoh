@@ -11,6 +11,12 @@ def projection_new(inDict, building_class):
     temp1 = str(inDict)
     temp1 = temp1.replace("\'","\"")
     df1 = pd.read_json(temp1, orient='index')
+    # #######################################################################
+    # remove solar thermal technology from the dictionary and dataframe
+    if "Solar thermal" in df1.index:
+        df1 = df1.drop(["Solar thermal"])
+    if "Solar thermal" in inDict.keys():
+        inDict.pop("Solar thermal", None)
     # create indicator lists for the lowest LCOH in different building classes
     indicator_list = []
     global_min = 1e10
@@ -20,7 +26,6 @@ def projection_new(inDict, building_class):
             global_min = inDict[key1]['Levelized costs of heat']
             best_tech = key1
     indicator_list.append({"unit": "EUR/MWh", "name": "Lowest LCOH for the given parameters within the building class \"" + building_class.upper() + "\" belongs to " + best_tech.upper(), "value": global_min})
-    
     for key1 in inDict.keys():
         if key1 == best_tech:
             continue
@@ -42,11 +47,12 @@ def projection_new(inDict, building_class):
             }
     num_of_bars = len(technologies)
     graphics = [] 
+    
     for parameter in economic_parameters:
         temp = {"type": "bar",
                 "xLabel": "Technologies",
                 "yLabel": yLabel_dict[parameter],
-                "data": {"labels": df1.index.tolist(),
+                "data": {"labels": technologies,
                          "datasets": [{"label": yLabel_dict[parameter],
                                        "backgroundColor": ["#3e95cd"]*num_of_bars,
                                        "data": list(df1[parameter].values)}]
