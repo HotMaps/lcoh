@@ -26,7 +26,9 @@ def levelized_costs_of_heat(energy_demand, heat_load, energy_price,
     '''
     r = float(r)
     lt = float(lt)
-    annuity = (r*(1+r)**lt)/((1+r)**lt - 1)
+    q = 1 + r
+    assert q != 0 or q != 1 ,"Error in calculation annuity factor ! Please choose an other interest rate."
+    annuity_factor = (1-q**lt)/(q**lt*(1-q))
 
     # final energy demand
     if efficiency_heatingsystem == 0:
@@ -38,17 +40,17 @@ def levelized_costs_of_heat(energy_demand, heat_load, energy_price,
     OPEX = float(fix_o_and_m) * float(heat_load) + float(var_o_and_m) * float(fed)
 
     # CAPEX: Capital Expenditure (EUR)
-    CAPEX = float(heat_load) * float(specific_investment_cost) * float(annuity)
+    CAPEX = float(heat_load) * float(specific_investment_cost) 
     # energy costs (EUR)
     energy_costs = float(fed) * float(energy_price)
     # total costs heat supply (EUR)
-    total_costs = float(OPEX) + float(CAPEX) + float(energy_costs)
+    present_value = float(annuity_factor) * (float(OPEX) + float(energy_costs)) + float(CAPEX)
     # LCOH [EUR/MWh]
     if energy_demand == 0:
         lcoh = 0
     else:
         # kWh to MWh
-        lcoh = float(total_costs) / float(energy_demand) * 1000
+        lcoh = float(present_value) / (float(energy_demand) * float(annuity_factor)) * 1000
     '''
     # costs per capita [€/capita]
     lcohcapita = total_costs / population
@@ -58,6 +60,6 @@ def levelized_costs_of_heat(energy_demand, heat_load, energy_price,
               'Capital Expenditure (CAPEX)': round(float(CAPEX), 2),
               'Operational Expenditure (OPEX)': round(float(OPEX), 2),
               'Energy costs': round(float(energy_costs), 2),
-              'Total costs': round(float(total_costs), 2),
+              'Present Value': round(float(present_value), 2),
               'Levelized costs of heat': round(float(lcoh), 2)}
     return output

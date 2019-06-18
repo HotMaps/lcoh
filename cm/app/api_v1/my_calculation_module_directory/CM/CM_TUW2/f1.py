@@ -123,7 +123,7 @@ def main(sector, building_type, demand_type, building_class, year, gfa, r,
     # since no separate data for service sector is available, the values for
     # the multi family houses are considered for the service sector as well.
     required_columns = return_columns(in_df_tech_info)
-    info_val = in_df_tech_info[(in_df_tech_info['year'] == int(year)) &
+    info_val = in_df_tech_info[(in_df_tech_info['year'] == int(year)) & (in_df_tech_info['nuts0_id'] == nuts0) & 
                             (in_df_tech_info['type_of_building'].str.replace(" ", "") == building_type.replace(" ", ""))
                             ].values[:, required_columns]
     # TODO: cells that are empty are assigned -1 to avoid division
