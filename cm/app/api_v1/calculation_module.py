@@ -16,7 +16,9 @@ verbose = True
 
 
 def create_dataframe(input_dict):
+    print ("1")
     temp = '%s' %input_dict
+    print ("1")
     temp = temp.replace("\'","\"")
     df = pd.read_json(temp, orient='records')
     return df
@@ -53,11 +55,12 @@ def calculation(output_directory, inputs_raster_selection,inputs_vector_selectio
     gfa = inputs_parameter_selection["gfa"]
     r = inputs_parameter_selection["r"]
     inputs_vector_selection = inputs_vector_selection['heating_technologies_eu28']
-    print ('inputs_vector_selection', inputs_vector_selection)
+
 
 
     # *********** # input rows from CSV DB and create dataframe***************
-    in_df_tech_info = create_dataframe(inputs_vector_selection['heating_technologies_eu28'])
+    in_df_tech_info = create_dataframe(inputs_vector_selection)
+
     if verbose:
         csv_path = path +  '/my_calculation_module_directory/CSVs'
         in_df_energy_price = pd.read_csv(csv_path + '/AD.TUW2_fuel_costs.csv')
