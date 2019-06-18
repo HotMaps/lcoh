@@ -5,6 +5,8 @@ path = os.path.dirname(os.path.abspath(__file__))
 if path not in sys.path:
     sys.path.append(path)
 from osgeo import gdal
+
+from ..constant import CM_NAME
 #from ..exceptions import ValidationError,EmptyRasterError
 #from ..helper import generate_output_file_tif
 import my_calculation_module_directory.CM.CM_TUW2.run_cm as CM2
@@ -50,6 +52,8 @@ def calculation(output_directory, inputs_raster_selection,inputs_vector_selectio
     year = inputs_parameter_selection["year"]
     gfa = inputs_parameter_selection["gfa"]
     r = inputs_parameter_selection["r"]
+    inputs_vector_selection = inputs_vector_selection['heating_technologies_eu28']
+    print ('inputs_vector_selection', inputs_vector_selection)
 
 
     # *********** # input rows from CSV DB and create dataframe***************
@@ -92,7 +96,7 @@ def calculation(output_directory, inputs_raster_selection,inputs_vector_selectio
                                        in_df_specific_demand,
                                        in_raster_nuts_id_number)
     result = dict()
-    result['name'] = 'CM Levelized Cost of Heat'
+    result['name'] = CM_NAME
     result['indicator'] = indictor_list
     result['graphics'] = graphics
     return result
