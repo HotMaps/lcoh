@@ -12,8 +12,8 @@ CM_ID = 5 # CM_ID is defined by the enegy research center of Martigny (CREM)
 PORT_LOCAL = int('500' + str(CM_ID))
 PORT_DOCKER = 80
 #TODO:**********************************************************
-CELERY_BROKER_URL = CELERY_BROKER_URL_LOCAL
-PORT = PORT_LOCAL
+CELERY_BROKER_URL = CELERY_BROKER_URL_DOCKER
+PORT = PORT_DOCKER
 #TODO:**********************************************************
 TRANFER_PROTOCOLE ='http://'
 INPUTS_CALCULATION_MODULE = [
