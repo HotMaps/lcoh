@@ -21,3 +21,5 @@ pandas
 networkx
 pyomo
 xlrd
+fiona==1.8.4
+geopandas==0.5.1
