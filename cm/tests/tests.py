@@ -27,7 +27,7 @@ class TestAPI(unittest.TestCase):
 
 
     def test_compute(self):
-        raster_file_path = 'tests/data/raster_for_test.tif'
+        raster_file_path = 'tests/data/nuts_id.tif'
         # simulate copy from HTAPI to CM
         save_path = UPLOAD_DIRECTORY+"/raster_for_test.tif"
         copyfile(raster_file_path, save_path)
@@ -35,9 +35,14 @@ class TestAPI(unittest.TestCase):
         inputs_raster_selection = {}
         inputs_parameter_selection = {}
         inputs_vector_selection = {}
-        inputs_raster_selection["heat"]  = save_path
-        inputs_vector_selection["heating_technologies_eu28"]  = {}
-        inputs_parameter_selection["multiplication_factor"] = 2
+        inputs_raster_selection["nuts_id_number"]  = save_path
+
+        inputs_parameter_selection["sav"] = "0.1" # savings in % [0,1]
+        inputs_parameter_selection["gfa"] = "150"  # Gross Floor Area in m² 
+        inputs_parameter_selection["year"] = "2015" # int
+        inputs_parameter_selection["r"] = "0.01" # interest rate
+        inputs_parameter_selection["bage"] = "Before 1945" # None for mean value
+        inputs_parameter_selection["btype"] = "Multifamily houses" # "Total" for mean value
 
         # register the calculation module a
         payload = {"inputs_raster_selection": inputs_raster_selection,
