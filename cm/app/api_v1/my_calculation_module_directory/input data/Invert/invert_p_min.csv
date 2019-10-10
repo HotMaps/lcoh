@@ -1,0 +1,337 @@
+nuts0,tec,p_min
+AT,Natural gas,10
+AT,HP Brine-to-Water,8
+AT,DH substation,15
+AT,Solar thermal,5
+AT,Biomass_Automatic,15
+AT,Bio-oil boiler,10
+AT,HP Air-to-Air,5
+AT,Biomass_Manual,15
+AT,Wood stove,5
+AT,Electric heater,5
+AT,Oil boiler,10
+AT,HP Air-to-Water,5
+BE,Natural gas,10
+BE,HP Brine-to-Water,10
+BE,DH substation,10
+BE,Solar thermal,3
+BE,Biomass_Automatic,10
+BE,Bio-oil boiler,10
+BE,HP Air-to-Air,10
+BE,Biomass_Manual,10
+BE,Wood stove,10
+BE,Electric heater,10
+BE,Oil boiler,10
+BE,HP Air-to-Water,10
+BG,Natural gas,10
+BG,HP Brine-to-Water,10
+BG,DH substation,10
+BG,Solar thermal,3
+BG,Biomass_Automatic,10
+BG,Bio-oil boiler,10
+BG,HP Air-to-Air,10
+BG,Biomass_Manual,10
+BG,Wood stove,10
+BG,Electric heater,10
+BG,Oil boiler,10
+BG,HP Air-to-Water,10
+HR,Natural gas,10
+HR,HP Brine-to-Water,10
+HR,DH substation,10
+HR,Solar thermal,3
+HR,Biomass_Automatic,10
+HR,Bio-oil boiler,10
+HR,HP Air-to-Air,10
+HR,Biomass_Manual,10
+HR,Wood stove,10
+HR,Electric heater,10
+HR,Oil boiler,10
+HR,HP Air-to-Water,10
+CY,Natural gas,10
+CY,HP Brine-to-Water,10
+CY,DH substation,10
+CY,Solar thermal,3
+CY,Biomass_Automatic,10
+CY,Bio-oil boiler,10
+CY,HP Air-to-Air,10
+CY,Biomass_Manual,10
+CY,Wood stove,10
+CY,Electric heater,10
+CY,Oil boiler,10
+CY,HP Air-to-Water,10
+CZ,Natural gas,10
+CZ,HP Brine-to-Water,10
+CZ,DH substation,10
+CZ,Solar thermal,3
+CZ,Biomass_Automatic,10
+CZ,Bio-oil boiler,10
+CZ,HP Air-to-Air,10
+CZ,Biomass_Manual,10
+CZ,Wood stove,10
+CZ,Electric heater,10
+CZ,Oil boiler,10
+CZ,HP Air-to-Water,10
+DK,Natural gas,10
+DK,HP Brine-to-Water,10
+DK,DH substation,10
+DK,Solar thermal,3
+DK,Biomass_Automatic,10
+DK,Bio-oil boiler,10
+DK,HP Air-to-Air,10
+DK,Biomass_Manual,10
+DK,Wood stove,10
+DK,Electric heater,10
+DK,Oil boiler,10
+DK,HP Air-to-Water,10
+EE,Natural gas,10
+EE,HP Brine-to-Water,10
+EE,DH substation,10
+EE,Solar thermal,3
+EE,Biomass_Automatic,10
+EE,Bio-oil boiler,10
+EE,HP Air-to-Air,10
+EE,Biomass_Manual,10
+EE,Wood stove,10
+EE,Electric heater,10
+EE,Oil boiler,10
+EE,HP Air-to-Water,10
+FI,Natural gas,10
+FI,HP Brine-to-Water,10
+FI,DH substation,10
+FI,Solar thermal,3
+FI,Biomass_Automatic,10
+FI,Bio-oil boiler,10
+FI,HP Air-to-Air,10
+FI,Biomass_Manual,10
+FI,Wood stove,10
+FI,Electric heater,10
+FI,Oil boiler,10
+FI,HP Air-to-Water,10
+FR,Natural gas,10
+FR,HP Brine-to-Water,10
+FR,DH substation,10
+FR,Solar thermal,3
+FR,Biomass_Automatic,10
+FR,Bio-oil boiler,10
+FR,HP Air-to-Air,10
+FR,Biomass_Manual,10
+FR,Wood stove,10
+FR,Electric heater,10
+FR,Oil boiler,10
+FR,HP Air-to-Water,10
+DE,Natural gas,15
+DE,HP Brine-to-Water,8
+DE,DH substation,15
+DE,Solar thermal,5
+DE,Biomass_Automatic,8
+DE,Bio-oil boiler,8
+DE,HP Air-to-Air,8
+DE,Biomass_Manual,8
+DE,Wood stove,8
+DE,Electric heater,4
+DE,Oil boiler,16
+DE,HP Air-to-Water,8
+EL,Natural gas,10
+EL,HP Brine-to-Water,10
+EL,DH substation,10
+EL,Solar thermal,3
+EL,Biomass_Automatic,10
+EL,Bio-oil boiler,10
+EL,HP Air-to-Air,10
+EL,Biomass_Manual,10
+EL,Wood stove,10
+EL,Electric heater,10
+EL,Oil boiler,10
+EL,HP Air-to-Water,10
+HU,Natural gas,10
+HU,HP Brine-to-Water,10
+HU,DH substation,10
+HU,Solar thermal,3
+HU,Biomass_Automatic,10
+HU,Bio-oil boiler,10
+HU,HP Air-to-Air,10
+HU,Biomass_Manual,10
+HU,Wood stove,10
+HU,Electric heater,10
+HU,Oil boiler,10
+HU,HP Air-to-Water,10
+IE,Natural gas,10
+IE,HP Brine-to-Water,10
+IE,DH substation,10
+IE,Solar thermal,3
+IE,Biomass_Automatic,10
+IE,Bio-oil boiler,10
+IE,HP Air-to-Air,10
+IE,Biomass_Manual,10
+IE,Wood stove,10
+IE,Electric heater,10
+IE,Oil boiler,10
+IE,HP Air-to-Water,10
+IT,Natural gas,10
+IT,HP Brine-to-Water,10
+IT,DH substation,10
+IT,Solar thermal,3
+IT,Biomass_Automatic,10
+IT,Bio-oil boiler,10
+IT,HP Air-to-Air,10
+IT,Biomass_Manual,10
+IT,Wood stove,10
+IT,Electric heater,10
+IT,Oil boiler,10
+IT,HP Air-to-Water,10
+LV,Natural gas,10
+LV,HP Brine-to-Water,10
+LV,DH substation,10
+LV,Solar thermal,3
+LV,Biomass_Automatic,10
+LV,Bio-oil boiler,10
+LV,HP Air-to-Air,10
+LV,Biomass_Manual,10
+LV,Wood stove,10
+LV,Electric heater,10
+LV,Oil boiler,10
+LV,HP Air-to-Water,10
+LT,Natural gas,10
+LT,HP Brine-to-Water,10
+LT,DH substation,10
+LT,Solar thermal,3
+LT,Biomass_Automatic,10
+LT,Bio-oil boiler,10
+LT,HP Air-to-Air,10
+LT,Biomass_Manual,10
+LT,Wood stove,10
+LT,Electric heater,10
+LT,Oil boiler,10
+LT,HP Air-to-Water,10
+LU,Natural gas,10
+LU,HP Brine-to-Water,10
+LU,DH substation,10
+LU,Solar thermal,3
+LU,Biomass_Automatic,10
+LU,Bio-oil boiler,10
+LU,HP Air-to-Air,10
+LU,Biomass_Manual,10
+LU,Wood stove,10
+LU,Electric heater,10
+LU,Oil boiler,10
+LU,HP Air-to-Water,10
+MT,Natural gas,10
+MT,HP Brine-to-Water,10
+MT,DH substation,10
+MT,Solar thermal,3
+MT,Biomass_Automatic,10
+MT,Bio-oil boiler,10
+MT,HP Air-to-Air,10
+MT,Biomass_Manual,10
+MT,Wood stove,10
+MT,Electric heater,10
+MT,Oil boiler,10
+MT,HP Air-to-Water,10
+NL,Natural gas,10
+NL,HP Brine-to-Water,10
+NL,DH substation,10
+NL,Solar thermal,3
+NL,Biomass_Automatic,10
+NL,Bio-oil boiler,10
+NL,HP Air-to-Air,10
+NL,Biomass_Manual,10
+NL,Wood stove,10
+NL,Electric heater,10
+NL,Oil boiler,10
+NL,HP Air-to-Water,10
+PL,Natural gas,10
+PL,HP Brine-to-Water,10
+PL,DH substation,10
+PL,Solar thermal,3
+PL,Biomass_Automatic,10
+PL,Bio-oil boiler,10
+PL,HP Air-to-Air,10
+PL,Biomass_Manual,10
+PL,Wood stove,10
+PL,Electric heater,10
+PL,Oil boiler,10
+PL,HP Air-to-Water,10
+PT,Natural gas,10
+PT,HP Brine-to-Water,10
+PT,DH substation,10
+PT,Solar thermal,3
+PT,Biomass_Automatic,10
+PT,Bio-oil boiler,10
+PT,HP Air-to-Air,10
+PT,Biomass_Manual,10
+PT,Wood stove,10
+PT,Electric heater,10
+PT,Oil boiler,10
+PT,HP Air-to-Water,10
+RO,Natural gas,10
+RO,HP Brine-to-Water,10
+RO,DH substation,10
+RO,Solar thermal,3
+RO,Biomass_Automatic,10
+RO,Bio-oil boiler,10
+RO,HP Air-to-Air,10
+RO,Biomass_Manual,10
+RO,Wood stove,10
+RO,Electric heater,10
+RO,Oil boiler,10
+RO,HP Air-to-Water,10
+SK,Natural gas,10
+SK,HP Brine-to-Water,10
+SK,DH substation,10
+SK,Solar thermal,3
+SK,Biomass_Automatic,10
+SK,Bio-oil boiler,10
+SK,HP Air-to-Air,10
+SK,Biomass_Manual,10
+SK,Wood stove,10
+SK,Electric heater,10
+SK,Oil boiler,10
+SK,HP Air-to-Water,10
+SI,Natural gas,10
+SI,HP Brine-to-Water,10
+SI,DH substation,10
+SI,Solar thermal,3
+SI,Biomass_Automatic,10
+SI,Bio-oil boiler,10
+SI,HP Air-to-Air,10
+SI,Biomass_Manual,10
+SI,Wood stove,10
+SI,Electric heater,10
+SI,Oil boiler,10
+SI,HP Air-to-Water,10
+ES,Natural gas,10
+ES,HP Brine-to-Water,10
+ES,DH substation,10
+ES,Solar thermal,3
+ES,Biomass_Automatic,10
+ES,Bio-oil boiler,10
+ES,HP Air-to-Air,10
+ES,Biomass_Manual,10
+ES,Wood stove,10
+ES,Electric heater,10
+ES,Oil boiler,10
+ES,HP Air-to-Water,10
+SE,Natural gas,10
+SE,HP Brine-to-Water,10
+SE,DH substation,10
+SE,Solar thermal,3
+SE,Biomass_Automatic,10
+SE,Bio-oil boiler,10
+SE,HP Air-to-Air,10
+SE,Biomass_Manual,10
+SE,Wood stove,10
+SE,Electric heater,10
+SE,Oil boiler,10
+SE,HP Air-to-Water,10
+UK,Natural gas,10
+UK,HP Brine-to-Water,10
+UK,DH substation,10
+UK,Solar thermal,3
+UK,Biomass_Automatic,10
+UK,Bio-oil boiler,10
+UK,HP Air-to-Air,10
+UK,Biomass_Manual,10
+UK,Wood stove,10
+UK,Electric heater,10
+UK,Oil boiler,10
+UK,HP Air-to-Water,10
