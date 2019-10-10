@@ -7,10 +7,11 @@ This script provides some functions for the Load Profiles Data Set
 """
 
 #% import modules
-import pandas as pd, numpy as np,seaborn as sns,matplotlib.pyplot as plt
+import pandas as pd, numpy as np,matplotlib.pyplot as plt
 from pathlib import Path
 import os,sys,glob,pickle,json
-sns.set()
+#import seaborn as sns,
+#sns.set()
 #% Paths
 BASE_DIR = Path(__file__).resolve().parent
 DB_DIR = BASE_DIR.joinpath("LOAD PROFILES")
