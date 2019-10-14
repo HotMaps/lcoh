@@ -33,7 +33,8 @@ def calculation(output_directory, inputs_raster_selection, inputs_parameter_sele
     result = dict()
     result["name"] = "Test"
     result["indicator"] = [{"unit": "Einheit", "name": "Testindicator", "value" : "42"},
-                          {"unit": "Einheit2", "name": "22Testindicator", "value" : "176"}]
+                          {"unit": "Einheit2", "name": "22Testindicator", "value" : "176"},
+                           {'name': 'nuts_code', 'unit': 'hh', 'value': ' '}] 
     result["indicator"].append( {'name': 'nuts_code', 'unit': 'hh', 'value': '130'})
 
     import pprint
