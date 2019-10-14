@@ -105,7 +105,7 @@ def generate_output(results,inputs,inputs2):
         solution = {"Technologies":list(results)}
         solution["Levelized cost of heat (EUR/MWh)"] = [round(results[tec]["Levelized costs of heat"]*1e3,2) for tec in solution["Technologies"]]
         solution["Energy price (EUR/MWh)"] = [round(results[tec]["energy_price"]*1e3,2) for tec in solution["Technologies"]]
-        print(solution)
+
         _,color = color_my_list(solution["Technologies"])
         
         list_of_tuples = [
@@ -120,6 +120,6 @@ def generate_output(results,inputs,inputs2):
                                                           backgroundColor = color ,
                                                           data = solution[x["label"]])] )) for x in list_of_tuples]
         
-        indicators = generate_input_indicators(inputs,inputs2)
+        indicators = generate_input_indicators(inputs,inputs2,True)
         
         return indicators,graphics

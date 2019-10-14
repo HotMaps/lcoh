@@ -14,7 +14,7 @@ def calculation(output_directory, inputs_raster_selection, inputs_parameter_sele
     if ok:
         results,inputs2,ok_main =  dhs.main(*inputs)
         if ok_main:
-            indicators,graphics = hotmaps_api.generate_output(results,inputs,inputs2,ok)        
+            indicators,graphics = hotmaps_api.generate_output(results,inputs,inputs2)        
         else:
             indicators  =  hotmaps_api.generate_input_indicators(inputs,results)
             graphics = []
