@@ -16,7 +16,7 @@ def calculation(output_directory, inputs_raster_selection, inputs_parameter_sele
         indicators,graphics = hotmaps_api.generate_output(results,inputs,inputs2)
     else:
         graphics = []
-        indicators = [dict(unit="",name="Errors",value=message)]
+        indicators = [dict(unit="-",name=f"Errors: {message}",value=0)]
 
     result = dict()
     result['name'] = CM_NAME

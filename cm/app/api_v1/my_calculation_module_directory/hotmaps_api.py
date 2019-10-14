@@ -38,17 +38,17 @@ def generate_input_indicators(inputs,inputs2):
     nuts_code,sav,gfa,year,r,bage,btype = inputs
     ued,heat_load,building_type,sector = inputs2
     
-    return [dict(unit="-",name=f"NUTS code: {nuts_code}",value=0.0),
+    return [dict(unit="-",name=f"NUTS code: {nuts_code}",value=0),
             dict(unit="%",name="savings in space heating",value=sav*100),
             dict(unit="m2",name="gross floor area",value=gfa),
-            dict(unit="-",name="year",value=year),
+            dict(unit=" ",name="year",value=year),
             dict(unit="%",name="interest rate",value=r*100),
-            dict(unit="-",name=f"building age: {bage}",value=0.0),
-            dict(unit="-",name=f"building type: {btype}",value=0.0),
+            dict(unit="-",name=f"building age: {bage}",value=0),
+            dict(unit="-",name=f"building type: {btype}",value=0),
             dict(unit="kWh",name="useful energy demand",value=round(ued,2)),
             dict(unit="kW",name="Qmax",value=round(heat_load,2)),
-            dict(unit="-",name=f"Sector: {sector}",value=0.0),
-            dict(unit="-",name=f"Used Building type for finacal data: {building_type}",value=0.0)]
+            dict(unit="-",name=f"Sector: {sector}",value=0),
+            dict(unit="-",name=f"Used Building type for finacal data: {building_type}",value=0)]
         
 def get_inputs( inputs_raster_selection, inputs_parameter_selection):
     path_nuts_id_tif = inputs_raster_selection["nuts_id_number"]
@@ -72,13 +72,13 @@ def get_inputs( inputs_raster_selection, inputs_parameter_selection):
 
 def generate_output(results,inputs,inputs2):
         solution = {"Technologies":list(results)}
-        solution["Levelized costs of heat (EUR/kWh)"] = [results[tec]["Levelized costs of heat"] for tec in solution["Technologies"]]
-        solution["Energy price (EUR/kWh)"] = [results[tec]["energy_price"] for tec in solution["Technologies"]]
+        solution["Levelized cost of heat (EUR/MWh)"] = [results[tec]["Levelized costs of heat"]*1e3 for tec in solution["Technologies"]]
+        solution["Energy price (EUR/MWh)"] = [results[tec]["energy_price"]*1e3 for tec in solution["Technologies"]]
         _,color = color_my_list(solution["Technologies"])
         
         list_of_tuples = [
-                    dict(type="bar",label="Levelized costs of heat (EUR/kWh)"),
-                    dict(type="bar",label="Energy price (EUR/kWh)"),
+                    dict(type="bar",label="Levelized cost of heat (EUR/MWh)"),
+                    dict(type="bar",label="Energy price (EUR/MWh)"),
                     ]
         graphics = [ dict( xLabel="Technologies",
                            yLabel=x["label"],
