@@ -43,7 +43,7 @@ INPUTS_CALCULATION_MODULE = [
         'input_parameter_name': 'r',
         'input_type': 'input',
         'input_unit': '',
-        'input_value': '0.3'},
+        'input_value': '0.03'},
      
     {   'cm_id': CM_ID,
         'input_max': '',
@@ -52,7 +52,7 @@ INPUTS_CALCULATION_MODULE = [
         'input_parameter_name': 'gfa',
         'input_type': 'input',
         'input_unit': 'm2',
-        'input_value': '1000'},
+        'input_value': '800'},
      
     {   'cm_id': CM_ID,
         'input_max': '',

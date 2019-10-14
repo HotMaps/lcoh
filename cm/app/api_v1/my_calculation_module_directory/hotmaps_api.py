@@ -38,7 +38,7 @@ def generate_input_indicators(inputs,inputs2):
     nuts_code,sav,gfa,year,r,bage,btype = inputs
     ued,heat_load,building_type,sector = inputs2
     
-    return [dict(unit="none",name="nuts_code",value=f"{nuts_code}"),
+    return [{"unit":"none","name":"nuts_code","value":f"{nuts_code}"},
             dict(unit="%",name="savings in space heating",value=f"{sav*100}"),
             dict(unit="m2",name="gross floor area",value=f"{gfa}"),
             dict(unit="none",name="year",value=f"{year}"),
