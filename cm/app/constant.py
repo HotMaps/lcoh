@@ -92,7 +92,7 @@ INPUTS_CALCULATION_MODULE = [
 
 SIGNATURE = {
 
-    "category": "Buildings",
+    "category": "Supply",
     "cm_name": CM_NAME,
     "layers_needed": [
         "nuts_id_number",
