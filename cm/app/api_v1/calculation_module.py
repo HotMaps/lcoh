@@ -12,8 +12,12 @@ from .my_calculation_module_directory import hotmaps_api
 def calculation(output_directory, inputs_raster_selection, inputs_parameter_selection):
     inputs,ok,message = hotmaps_api.get_inputs( inputs_raster_selection, inputs_parameter_selection)
     if ok:
-        results,inputs2 =  dhs.main(*inputs)
-        indicators,graphics = hotmaps_api.generate_output(results,inputs,inputs2)
+        results,inputs2,ok_main =  dhs.main(*inputs)
+        if ok_main:
+            indicators,graphics = hotmaps_api.generate_output(results,inputs,inputs2,ok)        
+        else:
+            indicators  =  hotmaps_api.generate_input_indicators(inputs,results)
+            graphics = []
     else:
         graphics = []
         indicators = [dict(unit="-",name=f"Errors: {message}",value=0)]

@@ -59,21 +59,27 @@ def color_my_list(liste):
         colors = ["#b3e2cd"]*l
         return dict(zip(liste,colors)),colors
         
-def generate_input_indicators(inputs,inputs2):
+def generate_input_indicators(inputs,inputs2,ok):
     nuts_code,sav,gfa,year,r,bage,btype = inputs
-    ued,heat_load,building_type,sector = inputs2
     
-    return [dict(unit="-",name=f"NUTS code: {nuts_code}",value=0),
+    out_list1 = [dict(unit="-",name=f"NUTS code: {nuts_code}",value=0),
             dict(unit="%",name="savings in space heating",value=sav*100),
             dict(unit="m2",name="gross floor area",value=gfa),
             dict(unit=" ",name="year",value=year),
             dict(unit="%",name="interest rate",value=r*100),
             dict(unit="-",name=f"building age: {bage}",value=0),
-            dict(unit="-",name=f"building type: {btype}",value=0),
-            dict(unit="kWh",name="useful energy demand",value=round(ued,2)),
-            dict(unit="kW",name="Qmax",value=round(heat_load,2)),
-            dict(unit="-",name=f"Sector: {sector}",value=0),
-            dict(unit="-",name=f"Used Building type for finacal data: {building_type}",value=0)]
+            dict(unit="-",name=f"building type: {btype}",value=0)]
+    if ok:
+        ued,heat_load,building_type,sector = inputs2
+        out_list2= [dict(unit="kWh",name="useful energy demand",value=round(ued,2)),
+                dict(unit="kW",name="Qmax",value=round(heat_load,2)),
+                dict(unit="-",name=f"Sector: {sector}",value=0),
+                dict(unit="-",name=f"Used Building type for finacal data: {building_type}",value=0)]
+    else:
+        out_list2 = [dict(unit="-",name=f"Errors: {inputs2}",value=0)]
+        
+    return out_list1 + out_list2
+
         
 def get_inputs( inputs_raster_selection, inputs_parameter_selection):
     path_nuts_id_tif = inputs_raster_selection["nuts_id_number"]

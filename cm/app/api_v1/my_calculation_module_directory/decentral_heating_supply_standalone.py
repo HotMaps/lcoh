@@ -53,7 +53,7 @@ def catch_assertion_errors(func):
             value = func(*args, **kwargs)
             return value
         except AssertionError as error:
-            return str(error)
+            return str(error),None,False
     return wrapper_decorator
 # =============================================================================
 # Functions
@@ -475,14 +475,14 @@ def main(nuts_code,sav,gfa,year,r,bage,btype):
     heat_load_hw = ued_hw*f_hw  # Pmax in kW
     heat_load = 1.2*(heat_load_sh + heat_load_hw)   # Pmax in kW
     result = lcoh_per_tec(r,nuts0,building_type,year,ued,heat_load)
-    return result,(ued,heat_load,building_type,sector)
+    return result,(ued,heat_load,building_type,sector),True
 
 if __name__ == "__main__":
     print("Calculation started")
 # =============================================================================
 # %%  User-Input
 # =============================================================================
-    nuts_code = "DE71" 
+    nuts_code = "CH01" 
     sav = 0 # savings in % [0,1]
     gfa = 150  # Gross Floor Area in m² 
     year = 2015 # int
@@ -492,7 +492,7 @@ if __name__ == "__main__":
 # =============================================================================
 #%%   "Algorithm"
 # =============================================================================
-    results,inputs = main(nuts_code,sav,gfa,year,r,bage,btype)
+    results,inputs,ok = main(nuts_code,sav,gfa,year,r,bage,btype)
 # =============================================================================
 #     
 # =============================================================================
