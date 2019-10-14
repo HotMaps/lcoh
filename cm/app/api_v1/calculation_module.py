@@ -34,7 +34,10 @@ def calculation(output_directory, inputs_raster_selection, inputs_parameter_sele
     result["name"] = "Test"
     result["indicator"] = [{"unit": "Einheit", "name": "Testindicator", "value" : "42"},
                           {"unit": "Einheit2", "name": "22Testindicator", "value" : "176"},
-                           {'name': 'nuts_code', 'unit': 'hh', 'value': ' '}] 
+                           {'name': 'point in value', 'unit': 'hh', 'value': '.'},
+                           {'name': 'empty value', 'unit': 'hh', 'value': ''},
+                           {'name': 'empty space in unit', 'unit': ' ', 'value': '0'},
+                           {'name': 'empty unit', 'unit': '', 'value': '0'}] 
     result["indicator"].append( {'name': 'nuts_code', 'unit': 'hh', 'value': '130'})
 
     import pprint
