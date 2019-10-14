@@ -38,17 +38,17 @@ def generate_input_indicators(inputs,inputs2):
     nuts_code,sav,gfa,year,r,bage,btype = inputs
     ued,heat_load,building_type,sector = inputs2
     
-    return [dict(unit="none",name="nuts_code",value=f"{nuts_code}"),
-            dict(unit="%",name="savings in space heating",value=f"{sav*100}"),
-            dict(unit="m2",name="gross floor area",value=f"{gfa}"),
-            dict(unit="none",name="year",value=f"{year}"),
-            dict(unit="%",name="interest rate",value=f"{r*100}"),
-            dict(unit="none",name="building age",value=f"{bage}"),
-            dict(unit="none",name="btype",value=f"{btype}"),
-            dict(unit="kWh",name="useful energy demand",value=f"{round(ued,2)}"),
-            dict(unit="kW",name="Qmax",value=f"{round(heat_load,2)}"),
-            dict(unit="none",name="Sector",value=f"{sector}"),
-            dict(unit="none",name="Used Building type for finacal data",value=f"{building_type}")]
+    return [dict(unit="-",name=f"NUTS code: {nuts_code}",value=0.0),
+            dict(unit="%",name="savings in space heating",value=sav*100),
+            dict(unit="m2",name="gross floor area",value=gfa),
+            dict(unit="-",name="year",value=year),
+            dict(unit="%",name="interest rate",value=r*100),
+            dict(unit="-",name=f"building age: {bage}",value=0.0),
+            dict(unit="-",name=f"building type: {btype}",value=0.0),
+            dict(unit="kWh",name="useful energy demand",value=round(ued,2)),
+            dict(unit="kW",name="Qmax",value=round(heat_load,2)),
+            dict(unit="-",name=f"Sector: {sector}",value=0.0),
+            dict(unit="-",name=f"Used Building type for finacal data: {building_type}",value=0.0)]
         
 def get_inputs( inputs_raster_selection, inputs_parameter_selection):
     path_nuts_id_tif = inputs_raster_selection["nuts_id_number"]
@@ -72,15 +72,17 @@ def get_inputs( inputs_raster_selection, inputs_parameter_selection):
 
 def generate_output(results,inputs,inputs2):
         solution = {"Technologies":list(results)}
-        solution["Levelized Costs Of Heat [EUR/kWh]"] = [results[tec]["Levelized costs of heat"] for tec in solution["Technologies"]]
-        solution["Energy Price [EUR/kWh]"] = [results[tec]["energy_price"] for tec in solution["Technologies"]]
+        solution["Levelized costs of heat (EUR/kWh)"] = [results[tec]["Levelized costs of heat"] for tec in solution["Technologies"]]
+        solution["Energy price (EUR/kWh)"] = [results[tec]["energy_price"] for tec in solution["Technologies"]]
         _,color = color_my_list(solution["Technologies"])
         
         list_of_tuples = [
-                    dict(type="bar",label="Levelized Costs Of Heat [EUR/kWh]"),
-                    dict(type="bar",label="Energy Price [EUR/kWh]"),
+                    dict(type="bar",label="Levelized costs of heat (EUR/kWh)"),
+                    dict(type="bar",label="Energy price (EUR/kWh)"),
                     ]
-        graphics = [ dict( type = x["type"],
+        graphics = [ dict( xLabel="Technologies",
+                           yLabel=x["label"],
+                          type = x["type"],
                            data = dict( labels = solution["Technologies"],
                                         datasets = [ dict(label=x["label"],
                                                           backgroundColor = color ,
