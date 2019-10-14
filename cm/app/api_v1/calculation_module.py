@@ -30,6 +30,10 @@ def calculation(output_directory, inputs_raster_selection, inputs_parameter_sele
     pp = pprint.PrettyPrinter(indent=4)
     pp.pprint(result)    
     
+    result = dict()
+    result["name"] = "Test"
+    result["indicator"] = [{"unit": "Einheit", "name": "Testindicator", "value" : "42"}]
+
     
     return result
 
