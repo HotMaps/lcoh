@@ -28,9 +28,6 @@ def calculation(output_directory, inputs_raster_selection, inputs_parameter_sele
     import pprint
     pp = pprint.PrettyPrinter(indent=4)
     pp.pprint(result) 
-   
-    
-    
     return result
 
 
