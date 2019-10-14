@@ -488,7 +488,7 @@ if __name__ == "__main__":
     year = 2015 # int
     r = 0.01 # interest rate
     bage = "Before 1945" # None for mean value
-    btype = "Multifamily houses" # "Total" for mean value
+    btype = "Single family- Terraced houses" # "Total" for mean value
 # =============================================================================
 #%%   "Algorithm"
 # =============================================================================

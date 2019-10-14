@@ -29,11 +29,36 @@ def color_my_list(liste):
                '#D55E00',
                '#CC79A7',
                '#000000']}
+    Category20=[ '#1f77b4',
+                 '#aec7e8',
+                 '#ff7f0e',
+                 '#ffbb78',
+                 '#2ca02c',
+                 '#98df8a',
+                 '#d62728',
+                 '#ff9896',
+                 '#9467bd',
+                 '#c5b0d5',
+                 '#8c564b',
+                 '#c49c94',
+                 '#e377c2',
+                 '#f7b6d2',
+                 '#7f7f7f',
+                 '#c7c7c7',
+                 '#bcbd22',
+                 '#dbdb8d',
+                 '#17becf',
+                 '#9edae5']               
     l = len(liste)
-    if 2<l<9:
+    if 8<l<21:
+        return dict(zip(liste,Category20)),Category20
+    elif 2<l<9:
         colors = color_blind_palette[l]
         return dict(zip(liste,colors)),colors
-		
+    else:
+        colors = ["#b3e2cd"]*l
+        return dict(zip(liste,colors)),colors
+        
 def generate_input_indicators(inputs,inputs2):
     nuts_code,sav,gfa,year,r,bage,btype = inputs
     ued,heat_load,building_type,sector = inputs2
@@ -74,6 +99,7 @@ def generate_output(results,inputs,inputs2):
         solution = {"Technologies":list(results)}
         solution["Levelized cost of heat (EUR/MWh)"] = [results[tec]["Levelized costs of heat"]*1e3 for tec in solution["Technologies"]]
         solution["Energy price (EUR/MWh)"] = [results[tec]["energy_price"]*1e3 for tec in solution["Technologies"]]
+        print(solution)
         _,color = color_my_list(solution["Technologies"])
         
         list_of_tuples = [
