@@ -22,8 +22,8 @@ def calculation(output_directory, inputs_raster_selection, inputs_parameter_sele
     result['name'] = CM_NAME
     result['indicator'] = indicators
     result['graphics'] = graphics
-    result['vector_layers'] = []
-    result['raster_layers'] = [] 
+#    result['vector_layers'] = []
+#    result['raster_layers'] = [] 
     
     import pprint
     pp = pprint.PrettyPrinter(indent=4)
@@ -34,7 +34,7 @@ def calculation(output_directory, inputs_raster_selection, inputs_parameter_sele
     result["name"] = "Test"
     result["indicator"] = [{"unit": "Einheit", "name": "Testindicator", "value" : "42"},
                           {"unit": "Einheit2", "name": "22Testindicator", "value" : "176"}]
-    result["indicator"].append( {'name': 'nuts_code', 'unit': 'hh', 'value': 'AT130'})
+    result["indicator"].append( {'name': 'nuts_code', 'unit': 'hh', 'value': '130'})
 
     import pprint
     pp = pprint.PrettyPrinter(indent=4)
