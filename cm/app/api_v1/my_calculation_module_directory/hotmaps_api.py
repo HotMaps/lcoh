@@ -38,17 +38,17 @@ def generate_input_indicators(inputs,inputs2):
     nuts_code,sav,gfa,year,r,bage,btype = inputs
     ued,heat_load,building_type,sector = inputs2
     
-    return [dict(unit="none",name="nuts_code",value=nuts_code),
-            dict(unit="%",name="savings in space heating",value=sav*100),
-            dict(unit="m2",name="gross floor area",value=gfa),
-            dict(unit="none",name="year",value=year),
-            dict(unit="%",name="interest rate",value=r*100),
-            dict(unit="none",name="building age",value=bage),
-            dict(unit="none",name="btype",value=btype),
-            dict(unit="kWh",name="useful energy demand",value=ued),
-            dict(unit="kW",name="Qmax",value=heat_load),
-            dict(unit="none",name="Sector",value=sector),
-            dict(unit="none",name="Used Building type for finacal data",value=building_type)]
+    return [dict(unit="none",name="nuts_code",value=f"{nuts_code}"),
+            dict(unit="%",name="savings in space heating",value=f"{sav*100}"),
+            dict(unit="m2",name="gross floor area",value=f"{gfa}"),
+            dict(unit="none",name="year",value=f"{year}"),
+            dict(unit="%",name="interest rate",value=f"{r*100}"),
+            dict(unit="none",name="building age",value=f"{bage}"),
+            dict(unit="none",name="btype",value=f"{btype}"),
+            dict(unit="kWh",name="useful energy demand",value=f"{ued}"),
+            dict(unit="kW",name="Qmax",value=f"{heat_load}"),
+            dict(unit="none",name="Sector",value=f"{sector}"),
+            dict(unit="none",name="Used Building type for finacal data",value=f"{building_type}")]
         
 def get_inputs( inputs_raster_selection, inputs_parameter_selection):
     path_nuts_id_tif = inputs_raster_selection["nuts_id_number"]
