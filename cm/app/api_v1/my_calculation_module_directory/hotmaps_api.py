@@ -97,8 +97,8 @@ def get_inputs( inputs_raster_selection, inputs_parameter_selection):
 
 def generate_output(results,inputs,inputs2):
         solution = {"Technologies":list(results)}
-        solution["Levelized cost of heat (EUR/MWh)"] = [results[tec]["Levelized costs of heat"]*1e3 for tec in solution["Technologies"]]
-        solution["Energy price (EUR/MWh)"] = [results[tec]["energy_price"]*1e3 for tec in solution["Technologies"]]
+        solution["Levelized cost of heat (EUR/MWh)"] = [round(results[tec]["Levelized costs of heat"]*1e3,2) for tec in solution["Technologies"]]
+        solution["Energy price (EUR/MWh)"] = [round(results[tec]["energy_price"]*1e3,2) for tec in solution["Technologies"]]
         print(solution)
         _,color = color_my_list(solution["Technologies"])
         
