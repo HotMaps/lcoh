@@ -25,14 +25,20 @@ def calculation(output_directory, inputs_raster_selection, inputs_parameter_sele
     result['vector_layers'] = []
     result['raster_layers'] = [] 
     
-    
     import pprint
     pp = pprint.PrettyPrinter(indent=4)
-    pp.pprint(result)    
+    pp.pprint(result) 
+   
     
     result = dict()
     result["name"] = "Test"
-    result["indicator"] = [{"unit": "Einheit", "name": "Testindicator", "value" : "42"}]
+    result["indicator"] = [{"unit": "Einheit", "name": "Testindicator", "value" : "42"},
+                          {"unit": "Einheit2", "name": "22Testindicator", "value" : "176"}]
+    result["indicator"].append( {'name': 'nuts_code', 'unit': 'hh', 'value': 'AT130'})
+
+    import pprint
+    pp = pprint.PrettyPrinter(indent=4)
+    pp.pprint(result) 
 
     
     return result
