@@ -38,15 +38,15 @@ def generate_input_indicators(inputs,inputs2):
     nuts_code,sav,gfa,year,r,bage,btype = inputs
     ued,heat_load,building_type,sector = inputs2
     
-    return [{"unit":"none","name":"nuts_code","value":f"{nuts_code}"},
+    return [dict(unit="none",name="nuts_code",value=f"{nuts_code}"),
             dict(unit="%",name="savings in space heating",value=f"{sav*100}"),
             dict(unit="m2",name="gross floor area",value=f"{gfa}"),
             dict(unit="none",name="year",value=f"{year}"),
             dict(unit="%",name="interest rate",value=f"{r*100}"),
             dict(unit="none",name="building age",value=f"{bage}"),
             dict(unit="none",name="btype",value=f"{btype}"),
-            dict(unit="kWh",name="useful energy demand",value=f"{ued}"),
-            dict(unit="kW",name="Qmax",value=f"{heat_load}"),
+            dict(unit="kWh",name="useful energy demand",value=f"{round(ued,2)}"),
+            dict(unit="kW",name="Qmax",value=f"{round(heat_load,2)}"),
             dict(unit="none",name="Sector",value=f"{sector}"),
             dict(unit="none",name="Used Building type for finacal data",value=f"{building_type}")]
         
