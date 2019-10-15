@@ -466,6 +466,8 @@ def main(nuts_code,sav,gfa,year,r,bage,btype):
     sector_mapper = {**dict(zip(serv,["Service"]*len(serv))),**dict(zip(res,["Residential"]*len(res)))}
     sector = sector_mapper[btype]
     building_type = building_types[btype]
+    if sav*100 > 0:
+        building_type=building_type.replace("existing","new")
     _nuts3,nuts2,nuts1,nuts0 = get_nuts(nuts_code)
     ued_sh = get_ued(nuts0,sector,"Space heating [kWh/m² year]",gfa,bage,btype) # spcae heating demand kWh
     ued_hw = get_ued(nuts0,sector,"Domestic hot water  [kWh/m² year]" ,gfa,bage,btype) # hot water demand kWh
