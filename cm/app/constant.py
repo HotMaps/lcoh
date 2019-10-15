@@ -46,7 +46,7 @@ INPUTS_CALCULATION_MODULE = [
         'input_value': '0.03'},
      
     {   'cm_id': CM_ID,
-        'input_max': '',
+        'input_max': '100e100',
         'input_min': '0.0',
         'input_name': 'Gross Floor Area',
         'input_parameter_name': 'gfa',

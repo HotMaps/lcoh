@@ -87,7 +87,7 @@ def get_inputs( inputs_raster_selection, inputs_parameter_selection):
     
     nuts_code = nuts3
     sav = float(inputs_parameter_selection["sav"]) # savings in % [0,1]
-    if  not (-0.001<sav<1.001):
+    if  not (-0.1<sav*100<100):
         return None,False,"Error Space heating savings is not int the interval [0,1]"
     gfa = float(inputs_parameter_selection["gfa"])  # Gross Floor Area in m² 
 
