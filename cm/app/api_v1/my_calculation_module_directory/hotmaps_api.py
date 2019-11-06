@@ -110,12 +110,19 @@ def generate_output(results,inputs,inputs2):
         solution["Levelized cost of heat (EUR/MWh)"] = [round(results[tec]["Levelized costs of heat"]*1e3,2) for tec in solution["Technologies"]]
         solution["Energy price (EUR/MWh)"] = [round(results[tec]["energy_price"]*1e3,2) for tec in solution["Technologies"]]
 
+        solution["CAPEX (EUR)"] = [round(results[tec]["Capital Expenditure (CAPEX)"],2) for tec in solution["Technologies"]]
+        solution["Energy Costs (EUR)"] = [round(results[tec]["Energy costs"],2) for tec in solution["Technologies"]]
+        solution["Final Energy Eemand (MWh)"] = [round(results[tec]["Final energy demand"]*1e-3,2) for tec in solution["Technologies"]]
+        solution["OPEX (EUR)"] = [round(results[tec]["Operational Expenditure (OPEX)"],2) for tec in solution["Technologies"]]
+        solution["Total Costs (EUR)"] = [round(results[tec]["Total costs"],2) for tec in solution["Technologies"]]
+        solution["anuity_factor"] = [round(results[tec]["anuity_factor"],2) for tec in solution["Technologies"]]
+        solution["efficiency_heatingsystem (%)"] = [round(results[tec]["efficiency_heatingsystem"]*1e2,2) for tec in solution["Technologies"]]
+        solution["heat_load (kW)"] = [round(results[tec]["heat_load"],2) for tec in solution["Technologies"]]
+
         _,color = color_my_list(solution["Technologies"])
-        
-        list_of_tuples = [
-                    dict(type="bar",label="Levelized cost of heat (EUR/MWh)"),
-                    dict(type="bar",label="Energy price (EUR/MWh)"),
-                    ]
+ 
+       
+        list_of_tuples = [dict(type="bar",label=label) for label in solution]
         graphics = [ dict( xLabel="Technologies",
                            yLabel=x["label"],
                           type = x["type"],
