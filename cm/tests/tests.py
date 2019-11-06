@@ -65,6 +65,11 @@ class TestAPI(unittest.TestCase):
                     inputs_parameter_selection["r"] = "0.01" # interest rate
                     inputs_parameter_selection["bage"] = bage # None for mean value
                     inputs_parameter_selection["btype"] = btype # "Total" for mean value
+                    # emission factors
+                    inputs_parameter_selection["ef_elec"] = 0.270224 
+                    inputs_parameter_selection["ef_oil"] = 0.2664 
+                    inputs_parameter_selection["ef_biomas"] = 0.312 
+                    inputs_parameter_selection["ef_gas"] = 0.20124 
             
                     # register the calculation module a
                     payload = {"inputs_raster_selection": inputs_raster_selection,

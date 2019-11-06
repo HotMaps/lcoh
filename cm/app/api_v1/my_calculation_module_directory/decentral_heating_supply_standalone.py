@@ -49,11 +49,14 @@ import functools
 def catch_assertion_errors(func):
     @functools.wraps(func)
     def wrapper_decorator(*args, **kwargs):
+        args_repr = [repr(a) for a in args] 
+        kwargs_repr = [f"{k}={v!r}" for k, v in kwargs.items()]  
+        signature = ", ".join(args_repr + kwargs_repr)
         try:
             value = func(*args, **kwargs)
             return value
         except AssertionError as error:
-            return str(error),None,False
+            return str(error),signature,False
     return wrapper_decorator
 # =============================================================================
 # Functions
@@ -459,7 +462,7 @@ def get_nuts(nuts_code):
     return nuts3,nuts2,nuts1,nuts0    
 
 @catch_assertion_errors
-def main(nuts_code,sav,gfa,year,r,bage,btype):
+def main(nuts_code,sav,gfa,year,r,bage,btype,*ef_args):
     serv = ['Trade', 'Other non-residential buildings', 'Hotels and Restaurants', 'Offices', 'Health', 'Education']
     res=['Multifamily houses', 'Single family- Terraced houses', 'Appartment blocks']
     building_types = dict(zip(res+serv,['existing MFH','existing SFH','existing MFH']+['existing MFH'] * len(serv)))
@@ -484,7 +487,7 @@ if __name__ == "__main__":
 # =============================================================================
 # %%  User-Input
 # =============================================================================
-    nuts_code = "CH01" 
+    nuts_code = "DE71" 
     sav = 0 # savings in % [0,1]
     gfa = 150  # Gross Floor Area in m² 
     year = 2015 # int
@@ -494,7 +497,8 @@ if __name__ == "__main__":
 # =============================================================================
 #%%   "Algorithm"
 # =============================================================================
-    results,inputs,ok = main(nuts_code,sav,gfa,year,r,bage,btype)
+    results,inputs,ok = main(nuts_code=nuts_code,sav=sav,gfa=gfa,year=year,r=r,bage=bage,btype=btype)
+
 # =============================================================================
 #     
 # =============================================================================

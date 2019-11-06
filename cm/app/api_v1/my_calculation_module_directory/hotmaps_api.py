@@ -60,7 +60,7 @@ def color_my_list(liste):
         return dict(zip(liste,colors)),colors
         
 def generate_input_indicators(inputs,inputs2,ok):
-    nuts_code,sav,gfa,year,r,bage,btype = inputs
+    nuts_code,sav,gfa,year,r,bage,btype,ef_elec,ef_oil,ef_biomas,ef_gas = inputs
     
     out_list1 = [dict(unit="-",name=f"NUTS code: {nuts_code}",value=0),
             dict(unit="%",name="savings in space heating",value=sav*100),
@@ -99,7 +99,11 @@ def get_inputs( inputs_raster_selection, inputs_parameter_selection):
     bage = inputs_parameter_selection["bage"]
     btype = inputs_parameter_selection["btype"]
     
-    return (nuts_code,sav,gfa,year,r,bage,btype),True,None
+    ef_elec = float(inputs_parameter_selection["ef_elec"]) 
+    ef_oil = float(inputs_parameter_selection["ef_oil"] )
+    ef_biomas = float(inputs_parameter_selection["ef_biomas"])
+    ef_gas = float(inputs_parameter_selection["ef_gas"])
+    return (nuts_code,sav,gfa,year,r,bage,btype,ef_elec,ef_oil,ef_biomas,ef_gas),True,None
 
 def generate_output(results,inputs,inputs2):
         solution = {"Technologies":list(results)}
