@@ -22,6 +22,7 @@ fuel_type_map = {'HP Air-to-Air': 'Electricity',
              'Wood stove': 'Biomass solid',
              'Natural gas': 'Natural Gas',
              'Solar thermal': 'solar'}
+             
 # =============================================================================
 # Map differnt convenentin of country shortcuts from SetNav to NUTS Convention
 # =============================================================================

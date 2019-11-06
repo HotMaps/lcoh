@@ -8,6 +8,13 @@ needs
 @author: 
 """
 from ..my_calculation_module_directory.raster_api import return_nuts_codes
+import os,sys
+root_path  = os.path.dirname(os.path.realpath(__file__))
+input_data_path = os.path.join(root_path,"input data")
+if input_data_path not in sys.path:
+    sys.path.append(input_data_path)
+from mapper import fuel_type_map
+
 
 def color_my_list(liste):
     color_blind_palette= {   3: ['#0072B2', '#E69F00', '#F0E442'],
@@ -106,27 +113,36 @@ def get_inputs( inputs_raster_selection, inputs_parameter_selection):
     return (nuts_code,sav,gfa,year,r,bage,btype,ef_elec,ef_oil,ef_biomas,ef_gas),True,None
 
 def generate_output(results,inputs,inputs2):
-        solution = {"Technologies":list(results)}
-        solution["Levelized cost of heat (EUR/MWh)"] = [round(results[tec]["Levelized costs of heat"]*1e3,2) for tec in solution["Technologies"]]
-        solution["Energy price (EUR/MWh)"] = [round(results[tec]["energy_price"]*1e3,2) for tec in solution["Technologies"]]
+        tec = list(results)
+        solution = dict()
+        solution["Levelized cost of heat (EUR/MWh)"] = [round(results[tec]["Levelized costs of heat"]*1e3,2) for tec in tec]
+        solution["Energy price (EUR/MWh)"] = [round(results[tec]["energy_price"]*1e3,2) for tec in tec]
 
-        solution["CAPEX (EUR)"] = [round(results[tec]["Capital Expenditure (CAPEX)"],2) for tec in solution["Technologies"]]
-        solution["Energy Costs (EUR)"] = [round(results[tec]["Energy costs"],2) for tec in solution["Technologies"]]
-        solution["Final Energy Eemand (MWh)"] = [round(results[tec]["Final energy demand"]*1e-3,2) for tec in solution["Technologies"]]
-        solution["OPEX (EUR)"] = [round(results[tec]["Operational Expenditure (OPEX)"],2) for tec in solution["Technologies"]]
-        solution["Total Costs (EUR)"] = [round(results[tec]["Total costs"],2) for tec in solution["Technologies"]]
-        solution["anuity_factor"] = [round(results[tec]["anuity_factor"],2) for tec in solution["Technologies"]]
-        solution["efficiency_heatingsystem (%)"] = [round(results[tec]["efficiency_heatingsystem"]*1e2,2) for tec in solution["Technologies"]]
-        solution["heat_load (kW)"] = [round(results[tec]["heat_load"],2) for tec in solution["Technologies"]]
-
-        _,color = color_my_list(solution["Technologies"])
+        solution["CAPEX (EUR)"] = [round(results[tec]["Capital Expenditure (CAPEX)"],2) for tec in tec]
+        solution["Energy Costs (EUR)"] = [round(results[tec]["Energy costs"],2) for tec in tec]
+        solution["Final Energy Eemand (MWh)"] = [round(results[tec]["Final energy demand"]*1e-3,2) for tec in tec]
+        solution["OPEX (EUR)"] = [round(results[tec]["Operational Expenditure (OPEX)"],2) for tec in tec]
+        solution["Total Costs (EUR)"] = [round(results[tec]["Total costs"],2) for tec in tec]
+        solution["anuity_factor"] = [round(results[tec]["anuity_factor"],2) for tec in tec]
+        solution["efficiency_heatingsystem (%)"] = [round(results[tec]["efficiency_heatingsystem"]*1e2,2) for tec in tec]
+        solution["heat_load (kW)"] = [round(results[tec]["heat_load"],2) for tec in tec]
+        *_,ef_elec,ef_oil,ef_biomas,ef_gas=inputs
+        
+        emission_factor_map = {'Electricity':ef_elec,
+                               'Light fuel oil':ef_oil,
+                               'Biomass solid':ef_biomas,
+                               'Natural Gas':ef_gas,
+                               'solar':0,}
+        
+        solution["CO2 Emission (tCO2)"] = [round(results[tec]["fed"]*emission_factor_map[fuel_type_map[tec]],2) for tec in tec]
+        _,color = color_my_list(tec)
  
        
         list_of_tuples = [dict(type="bar",label=label) for label in solution]
         graphics = [ dict( xLabel="Technologies",
                            yLabel=x["label"],
                           type = x["type"],
-                           data = dict( labels = solution["Technologies"],
+                           data = dict( labels = tec,
                                         datasets = [ dict(label=x["label"],
                                                           backgroundColor = color ,
                                                           data = solution[x["label"]])] )) for x in list_of_tuples]
