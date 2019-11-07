@@ -276,12 +276,12 @@ def lcoh(energy_demand, heat_load, energy_price,
     # energy costs (EUR)
     energy_costs = fed * energy_price
     # total costs heat supply (EUR)
-    OPEX_ = annuity_factor * (OPEX + energy_costs)
+    OPEX_ = annuity_factor * (OPEX + energy_costs) 
     
     present_value = OPEX_ + CAPEX
     
     # LCOH [EUR/kWh]
-    energy_demand_ = (energy_demand * annuity_factor)
+    energy_demand_ = (energy_demand * annuity_factor) 
     if energy_demand == 0:
         lcoh = 0
     else:
@@ -313,7 +313,7 @@ def lcoh(energy_demand, heat_load, energy_price,
 # =============================================================================
 if input_data_path not in sys.path:
     sys.path.append(input_data_path)
-from mapper import setNav_code_map,fuel_type_map,data_electric_heating
+from mapper import setNav_code_map,fuel_type_map,data_electric_heating,data_solar_thermal
 def get_energy_price(nuts0,tec,year,sector='Residential',
                      tax='Including tax but no VAT',
                      setNav_code_map=setNav_code_map,
@@ -352,7 +352,7 @@ def get_energy_price(nuts0,tec,year,sector='Residential',
 
     return energy_price
 # =============================================================================
-def get_tec_data(df,tec,heat_load,nuts0):
+def get_tec_data(df,tec,heat_load,nuts0,building_typ):
     """This function return the data for the heating system in a specifc NUTS 0
     region, year and sector
 
@@ -396,7 +396,20 @@ def get_tec_data(df,tec,heat_load,nuts0):
         
     if heat_load < p_min_invert:
         heat_load = p_min_invert
-    
+
+#    if tec == "Solar thermal":
+#        index = df.loc[tec,"equipment_and_maintenance_index"]
+#        data=data_solar_thermal.groupby(["building_typ","financ_typ"]).get_group((building_typ,"o&m fixed"))
+#        k1_fix_o_and_m = data.loc[int(df.year[tec]),"k1"]*index
+#        k2_fix_o_and_m = data.loc[int(df.year[tec]),"k2"]
+#
+#        index = df.loc[tec,"price_index_households_appliances"]
+#        data=data_solar_thermal.groupby(["building_typ","financ_typ"]).get_group((building_typ,"invest"))
+#
+#        k1_specific_investment_cost = data.loc[int(df.year[tec]),"k1"]*index
+#        k2_specific_investment_cost = data.loc[int(df.year[tec]),"k2"]
+#        
+        
     k1_specific_investment_cost, k2_specific_investment_cost = \
     xor(k1_specific_investment_cost, k2_specific_investment_cost,tec,
         "invest",nuts0)
@@ -443,7 +456,7 @@ def lcoh_per_tec(r,nuts0,building_typ,year,heating_energy_demand,heat_load,
     for tec in df.index:
         #XXX: heat_load2
         specific_investment_cost,fix_o_and_m,var_o_and_m,efficiency,lifetime,heat_load2 = \
-            get_tec_data(df,tec,heat_load,nuts0)
+            get_tec_data(df,tec,heat_load,nuts0,building_typ.split(" ")[0].strip())
         
         energy_price = get_energy_price(nuts0,tec,year)
         
@@ -487,13 +500,13 @@ if __name__ == "__main__":
 # =============================================================================
 # %%  User-Input
 # =============================================================================
-    nuts_code = "DE71" 
+    nuts_code = "DK032" 
     sav = 0 # savings in % [0,1]
-    gfa = 150  # Gross Floor Area in m² 
+    gfa = 1000  # Gross Floor Area in m² 
     year = 2015 # int
-    r = 0.01 # interest rate
+    r = 0.03 # interest rate
     bage = "Before 1945" # None for mean value
-    btype = "Single family- Terraced houses" # "Total" for mean value
+    btype = "Multifamily houses" # "Total" for mean value
 # =============================================================================
 #%%   "Algorithm"
 # =============================================================================

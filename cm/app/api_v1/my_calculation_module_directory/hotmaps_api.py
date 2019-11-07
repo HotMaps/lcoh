@@ -70,8 +70,8 @@ def generate_input_indicators(inputs,inputs2,ok):
     nuts_code,sav,gfa,year,r,bage,btype,ef_elec,ef_oil,ef_biomas,ef_gas = inputs
     
     out_list1 = [dict(unit="-",name=f"NUTS code: {nuts_code}",value=0),
-            dict(unit="%",name="savings in space heating",value=sav*100),
-            dict(unit="m2",name="gross floor area",value=gfa),
+            dict(unit="%",name="savings in space heating (%)",value=sav*100),
+            dict(unit="m2",name="gross floor area (m2)",value=gfa),
             dict(unit=" ",name="year",value=year),
             dict(unit="%",name="interest rate",value=r*100),
             dict(unit="-",name=f"building age: {bage}",value=0),
@@ -79,9 +79,9 @@ def generate_input_indicators(inputs,inputs2,ok):
     if ok:
         ued,heat_load,building_type,sector = inputs2
         out_list2= [dict(unit="kWh",name="useful energy demand",value=round(ued,2)),
-                dict(unit="kW",name="Qmax",value=round(heat_load,2)),
-                dict(unit="-",name=f"Sector: {sector}",value=0),
-                dict(unit="-",name=f"Used Building type for finacal data: {building_type}",value=0)]
+                dict(unit="kW",name="heat load - Qmax (kW)",value=round(heat_load,2)),
+                dict(unit="-",name=f"sector: {sector}",value=0),
+                dict(unit="-",name=f"used building type for financial  data: {building_type}",value=0)]
     else:
         out_list2 = [dict(unit="-",name=f"Errors: {inputs2}",value=0)]
         
@@ -117,15 +117,14 @@ def generate_output(results,inputs,inputs2):
         solution = dict()
         solution["Levelized cost of heat (EUR/MWh)"] = [round(results[tec]["Levelized costs of heat"]*1e3,2) for tec in tec]
         solution["Energy price (EUR/MWh)"] = [round(results[tec]["energy_price"]*1e3,2) for tec in tec]
-
         solution["CAPEX (EUR)"] = [round(results[tec]["Capital Expenditure (CAPEX)"],2) for tec in tec]
         solution["Energy Costs (EUR)"] = [round(results[tec]["Energy costs"],2) for tec in tec]
-        solution["Final Energy Eemand (MWh)"] = [round(results[tec]["Final energy demand"]*1e-3,2) for tec in tec]
+        solution["Final Energy Demand (MWh)"] = [round(results[tec]["Final energy demand"]*1e-3,2) for tec in tec]
         solution["OPEX (EUR)"] = [round(results[tec]["Operational Expenditure (OPEX)"],2) for tec in tec]
         solution["Total Costs (EUR)"] = [round(results[tec]["Total costs"],2) for tec in tec]
-        solution["anuity_factor"] = [round(results[tec]["anuity_factor"],2) for tec in tec]
-        solution["efficiency_heatingsystem (%)"] = [round(results[tec]["efficiency_heatingsystem"]*1e2,2) for tec in tec]
-        solution["heat_load (kW)"] = [round(results[tec]["heat_load"],2) for tec in tec]
+        solution["Anuity Factor"] = [round(results[tec]["anuity_factor"],2) for tec in tec]
+        solution["Efficiency heatingsystem (%)"] = [round(results[tec]["efficiency_heatingsystem"]*1e2,2) for tec in tec]
+#        solution["Heat Load (kW)"] = [round(results[tec]["heat_load"],2) for tec in tec]
         *_,ef_elec,ef_oil,ef_biomas,ef_gas=inputs
         
         emission_factor_map = {'Electricity':ef_elec,
