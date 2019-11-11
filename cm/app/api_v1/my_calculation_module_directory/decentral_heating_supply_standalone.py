@@ -450,7 +450,7 @@ def lcoh_per_tec(r,nuts0,building_typ,year,heating_energy_demand,heat_load,
     
     df = grp_financ_heating_tec.get_group((nuts0,building_typ,year))
     df = df.set_index(df.heating_equipment)
-    df = df.drop(["DH substation"])
+    df = df.drop(["DH substation","Solar thermal"])
 #    df = df.drop(["Bio-oil boiler"]) # XXX: No fuel prices for bio oil , therefore drop this heating system
     out = dict()
     for tec in df.index:
