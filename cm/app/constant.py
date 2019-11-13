@@ -84,6 +84,7 @@ INPUTS_CALCULATION_MODULE = [
           'input_unit': '',
           'input_value': '0'},
          {'cm_id': CM_ID,
+          'input_priority': '1',
           'input_max': '',
           'input_min': '',
           'input_name': 'emission factor - Electricity ',
@@ -92,6 +93,7 @@ INPUTS_CALCULATION_MODULE = [
           'input_unit': 'tCO2/MWh',
           'input_value': '0.270224'},
          {'cm_id': CM_ID,
+          'input_priority': '1',
           'input_max': '',
           'input_min': '',
           'input_name': 'emission factor - Light fuel oil ',
@@ -100,6 +102,7 @@ INPUTS_CALCULATION_MODULE = [
           'input_unit': 'tCO2/MWh',
           'input_value': '0.2664'},
          {'cm_id': CM_ID,
+          'input_priority': '1',
           'input_max': '',
           'input_min': '',
           'input_name': 'emission factor - Biomass solid',
@@ -108,13 +111,14 @@ INPUTS_CALCULATION_MODULE = [
           'input_unit': 'tCO2/MWh',
           'input_value': '0.312'},
          {'cm_id': CM_ID,
+          'input_priority': '1',
           'input_max': '',
           'input_min': '',
           'input_name': 'emission factor - Natural gas',
           'input_parameter_name': 'ef_gas',
           'input_type': 'input',
           'input_unit': 'tCO2/MWh',
-          'input_value': '0.20123999999999997'}]
+          'input_value': '0.20124',}]
 
 
 

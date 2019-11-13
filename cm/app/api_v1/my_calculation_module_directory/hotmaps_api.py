@@ -79,7 +79,7 @@ def generate_input_indicators(inputs,inputs2,ok):
     if ok:
         ued,heat_load,building_type,sector = inputs2
         out_list2= [dict(unit="kWh",name="useful energy demand",value=round(ued,2)),
-                dict(unit="kW",name="heat load - Qmax (kW)",value=round(heat_load,2)),
+                dict(unit="kW",name="heat load - Qmax (kW)",value=round(heat_load,0)),
                 dict(unit="-",name=f"sector: {sector}",value=0),
                 dict(unit="-",name=f"used building type for financial  data: {building_type}",value=0)]
     else:
