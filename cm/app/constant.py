@@ -86,7 +86,7 @@ INPUTS_CALCULATION_MODULE = [
          {'cm_id': CM_ID,
           'input_priority': '1',
 		  'input_max': '-100e100',
-          'input_min': '100e100'
+          'input_min': '100e100',
           'input_name': 'emission factor - Electricity ',
           'input_parameter_name': 'ef_elec',
           'input_type': 'input',
@@ -95,7 +95,7 @@ INPUTS_CALCULATION_MODULE = [
          {'cm_id': CM_ID,
           'input_priority': '1',
 		  'input_max': '-100e100',
-          'input_min': '100e100'
+          'input_min': '100e100',
           'input_name': 'emission factor - Light fuel oil ',
           'input_parameter_name': 'ef_oil',
           'input_type': 'input',
@@ -104,7 +104,7 @@ INPUTS_CALCULATION_MODULE = [
          {'cm_id': CM_ID,
           'input_priority': '1',
 		 'input_max': '-100e100',
-          'input_min': '100e100'
+          'input_min': '100e100',
           'input_name': 'emission factor - Biomass solid',
           'input_parameter_name': 'ef_biomas',
           'input_type': 'input',
@@ -113,7 +113,7 @@ INPUTS_CALCULATION_MODULE = [
          {'cm_id': CM_ID,
           'input_priority': '1',
 		  'input_max': '-100e100',
-          'input_min': '100e100'
+          'input_min': '100e100',
           'input_name': 'emission factor - Natural gas',
           'input_parameter_name': 'ef_gas',
           'input_type': 'input',
