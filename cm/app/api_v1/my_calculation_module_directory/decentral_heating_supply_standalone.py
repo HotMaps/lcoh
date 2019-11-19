@@ -288,11 +288,11 @@ def lcoh(energy_demand, heat_load, energy_price,
         lcoh = present_value / energy_demand_
 
     output = {'Final energy demand': float(fed),
-              'Capital Expenditure (CAPEX)': float(CAPEX),
+              'Capital Expenditure (CAPEX)': float(CAPEX/annuity_factor),
               'Operational Expenditure (OPEX)': float(OPEX),
               "OPEX * annuity_factor": float(OPEX_),
               'Energy costs': float(energy_costs),
-              'Total costs': float(present_value),
+              'Total costs': float(CAPEX/annuity_factor)+float(OPEX),
               "energy_demand * annuity_factor":float(energy_demand_),
               "energy_demand":float(energy_demand),
               'Levelized costs of heat': float(lcoh),

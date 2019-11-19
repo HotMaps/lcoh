@@ -133,7 +133,7 @@ def generate_output(results,inputs,inputs2):
                                'Natural Gas':ef_gas,
                                'solar':0,}
         
-        solution["CO2 Emission (tCO2/yr)"] = [round(results[tec]["fed"]*emission_factor_map[fuel_type_map[tec]],2) for tec in tec]
+        solution["CO2 Emission (tCO2/yr)"] = [round(results[tec]["fed"]*1e-3*emission_factor_map[fuel_type_map[tec]],2) for tec in tec]
         _,color = color_my_list(tec)
  
        
