@@ -30,8 +30,8 @@ def calculation(output_directory, inputs_raster_selection, inputs_parameter_sele
 #    result['raster_layers'] = [] 
     
     import pprint
-    pp = pprint.PrettyPrinter(indent=4)
-    pp.pprint(result) 
+#    pp = pprint.PrettyPrinter(indent=4)
+    pprint.pprint(result)#,stream = open(r"C:\Users\hasani\Desktop\results.txt","a")) 
     return result
 
 

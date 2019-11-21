@@ -269,7 +269,7 @@ def lcoh(energy_demand, heat_load, energy_price,
         fed = energy_demand / efficiency_heatingsystem  
 
     # OPEX: Operational Expenditure (EUR)
-    OPEX = fix_o_and_m * heat_load + var_o_and_m * fed
+    OPEX = fix_o_and_m * heat_load + var_o_and_m * fed * 1e-3 ## 1e-3 becaues var_o_and_m to high 
 
     # CAPEX: Capital Expenditure (EUR)
     CAPEX = heat_load * specific_investment_cost 
@@ -292,7 +292,7 @@ def lcoh(energy_demand, heat_load, energy_price,
               'Operational Expenditure (OPEX)': float(OPEX),
               "OPEX * annuity_factor": float(OPEX_),
               'Energy costs': float(energy_costs),
-              'Total costs': float(CAPEX/annuity_factor)+float(OPEX),
+              'Total costs': float(CAPEX/annuity_factor)+float(OPEX) + float(energy_costs),
               "energy_demand * annuity_factor":float(energy_demand_),
               "energy_demand":float(energy_demand),
               'Levelized costs of heat': float(lcoh),
@@ -308,7 +308,9 @@ def lcoh(energy_demand, heat_load, energy_price,
               "anuity_factor":annuity_factor,
               "energy_demand_":energy_demand_,
               "efficiency_heatingsystem":efficiency_heatingsystem,
-              "energy_price":energy_price}
+              "energy_price":energy_price,
+              "fix o&m ": fix_o_and_m,
+              "var o%m" : var_o_and_m}
     return output
 # =============================================================================
 if input_data_path not in sys.path:

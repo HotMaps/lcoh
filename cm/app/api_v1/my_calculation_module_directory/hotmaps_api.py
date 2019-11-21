@@ -123,7 +123,7 @@ def generate_output(results,inputs,inputs2):
         solution["OPEX (EUR/yr)"] = [round(results[tec]["Operational Expenditure (OPEX)"],2) for tec in tec]
         solution["Total Costs (EUR/yr)"] = [round(results[tec]["Total costs"],2) for tec in tec]
         solution["Anuity Factor"] = [round(results[tec]["anuity_factor"],2) for tec in tec]
-        solution["Efficiency heatingsystem (%)"] = [round(results[tec]["efficiency_heatingsystem"]*1e2,2) for tec in tec]
+        solution["Efficiency heating system (%)"] = [round(results[tec]["efficiency_heatingsystem"]*1e2,2) for tec in tec]
 #        solution["Heat Load (kW)"] = [round(results[tec]["heat_load"],2) for tec in tec]
         *_,ef_elec,ef_oil,ef_biomas,ef_gas=inputs
         
