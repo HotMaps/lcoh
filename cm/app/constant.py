@@ -20,17 +20,9 @@ INPUTS_CALCULATION_MODULE = [
 
     {'input_name': 'Gross floor area',
      'input_type': 'input',
-     'input_parameter_name': 'gfa',
-     'input_value': 100,
-     'input_unit': 'm2',
-     'input_min': 1,
-     'input_max': 10000,
-     'cm_id': CM_ID
-     },
-    {'input_name': 'Interest rate',
-     'input_type': 'input',
-     'input_parameter_name': 'r',
-     'input_value': 0.05,
+     'input_parameter_name': 'multiplication_factor',
+     'input_value': '1',
+     'input_priority': 0,
      'input_unit': '',
      'input_min': 0,
      'input_max': 1,
@@ -99,16 +91,16 @@ INPUTS_CALCULATION_MODULE = [
 
 
 SIGNATURE = {
-    "category": "Buildings",
-    "authorized_scale":["NUTS 2", "NUTS 3","LAU 2","Hectare"],
+
+    "category": "Demand",
     "cm_name": CM_NAME,
     "description_link": "",
     "layers_needed": [
             "nuts_id_number"
             ],
     "type_layer_needed": [
-            "nuts_id_number"
-            ],
+        {"type": "heat", "description": "You can choose the layer of type 'heat'."}
+    ],
     "vectors_needed": [
         "heating_technologies_eu28",
 

@@ -102,6 +102,9 @@ def calculation(output_directory, inputs_raster_selection,inputs_vector_selectio
     result['name'] = CM_NAME
     result['indicator'] = indictor_list
     result['graphics'] = graphics
+    result['vector_layers'] = vector_layers
+    result['raster_layers'] = [{"name": "layers of heat_densiy {}".format(factor),"path": output_raster1, "type": "heat"}]
+    print ('result',result)
     return result
     
 
