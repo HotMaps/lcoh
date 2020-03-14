@@ -494,6 +494,8 @@ def main(nuts_code,sav,gfa,year,r,bage,btype,*ef_args):
     heat_load_sh = ued_sh*f_sh*(1-sav)  # Pmax in kW
     heat_load_hw = ued_hw*f_hw  # Pmax in kW
     heat_load = 1.2*(heat_load_sh + heat_load_hw)   # Pmax in kW
+    if nuts0 == "CH":
+        nuts0="AT"
     result = lcoh_per_tec(r,nuts0,building_type,year,ued,heat_load)
     return result,(ued,heat_load,building_type,sector),True
 
