@@ -77,7 +77,7 @@ INPUTS_CALCULATION_MODULE = [
           'input_value': ['2015', '2020', '2030', '2050']},
          {'cm_id': CM_ID,
           'input_max': '99.9',
-          'input_min': '0.1',
+          'input_min': '0',
           'input_name': 'Savings for space heating ',
           'input_parameter_name': 'sav',
           'input_type': 'input',
