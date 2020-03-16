@@ -93,9 +93,9 @@ def get_inputs( inputs_raster_selection, inputs_parameter_selection):
     (nuts0, nuts1, nuts2, nuts3)  = return_nuts_codes(path_nuts_id_tif) 
     
     nuts_code = nuts3
-    sav = float(inputs_parameter_selection["sav"]) # savings in % [0,1]
-    if  not (-0.1<sav*100<100):
-        return None,False,"Error Space heating savings is not int the interval [0,1]"
+    sav = float(inputs_parameter_selection["sav"]) # savings in % [0.1,99.9]
+    if  not (-0.09<sav<100):
+        return None,False,"Error Space heating savings is not int the interval [0.1,99.9]"
     gfa = float(inputs_parameter_selection["gfa"])  # Gross Floor Area in m² 
 
     year = int(inputs_parameter_selection["year"])

@@ -478,6 +478,7 @@ def get_nuts(nuts_code):
 
 @catch_assertion_errors
 def main(nuts_code,sav,gfa,year,r,bage,btype,*ef_args):
+    sav = sav/100
     serv = ['Trade', 'Other non-residential buildings', 'Hotels and Restaurants', 'Offices', 'Health', 'Education']
     res=['Multifamily houses', 'Single family- Terraced houses', 'Appartment blocks']
     building_types = dict(zip(res+serv,['existing MFH','existing SFH','existing MFH']+['existing MFH'] * len(serv)))
