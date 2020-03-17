@@ -70,7 +70,7 @@ def generate_input_indicators(inputs,inputs2,ok):
     nuts_code,sav,gfa,year,r,bage,btype,ef_elec,ef_oil,ef_biomas,ef_gas = inputs
     
     out_list1 = [dict(unit="-",name=f"NUTS code: {nuts_code}",value=0),
-            dict(unit=" % ",name="savings in space heating (%)",value=sav*100),
+            dict(unit=" % ",name="savings in space heating (%)",value=sav),
             dict(unit="m2",name="gross floor area (m2)",value=gfa),
             dict(unit=" ",name="year",value=year),
             dict(unit="%",name="interest rate",value=r*100),
