@@ -490,11 +490,11 @@ def main(nuts_code,sav,gfa,year,r,bage,btype,*ef_args):
     _nuts3,nuts2,nuts1,nuts0 = get_nuts(nuts_code)
     ued_sh = get_ued(nuts0,sector,"Space heating [kWh/m² year]",gfa,bage,btype) # spcae heating demand kWh
     ued_hw = get_ued(nuts0,sector,"Domestic hot water  [kWh/m² year]" ,gfa,bage,btype) # hot water demand kWh
-    ued = ued_sh + ued_hw
     f_sh,f_hw = get_peaks(nuts2,f"{sector.lower()}_sector")  # pmax factor in 1/h
     heat_load_sh = ued_sh*f_sh*(1-sav)  # Pmax in kW
     heat_load_hw = ued_hw*f_hw  # Pmax in kW
     heat_load = 1.2*(heat_load_sh + heat_load_hw)   # Pmax in kW
+    ued = ued_sh*(1-sav) + ued_hw
     if nuts0 == "CH":
         nuts0="AT"
     result = lcoh_per_tec(r,nuts0,building_type,year,ued,heat_load)
