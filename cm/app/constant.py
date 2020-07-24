@@ -138,7 +138,7 @@ SIGNATURE = {
     ],
     "cm_url": "Do not add something",
     "cm_description": """This calclulation module calculates the levelized cost 
-    of heat (LCOH) for various technologies to supply a user definded building""",
+    of heat (LCOH) for various decentral heat supply technologies. The calculation can be made for different building categories and years""",
     "cm_id": CM_ID,
     "wiki_url":"https://wiki.hotmaps.eu/en/CM-Decentral-heating-supply",
     'inputs_calculation_module': INPUTS_CALCULATION_MODULE
