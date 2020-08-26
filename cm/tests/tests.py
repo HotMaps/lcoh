@@ -59,7 +59,7 @@ class TestAPI(unittest.TestCase):
                     inputs_vector_selection = {}
                     inputs_raster_selection["nuts_id_number"]  = save_path
                     
-                    inputs_parameter_selection["sav"] = "0.1" # savings in % [0,1]
+                    inputs_parameter_selection["sav"] = "10" # savings in % [0.1,99.9]
                     inputs_parameter_selection["gfa"] = "150"  # Gross Floor Area in m² 
                     inputs_parameter_selection["year"] = year # int
                     inputs_parameter_selection["r"] = "0.01" # interest rate
